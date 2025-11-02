@@ -81,63 +81,82 @@ EOF
 
     if $use_convex; then
         cat >> .env.local << EOF
-# --------------------------------------------
-# Convex (Backend/Database)
-# --------------------------------------------
-# Development deployment
-NEXT_PUBLIC_CONVEX_URL=
-# TODO: Copy from convex dashboard or run: npx convex dev
+# ============================================
+# CONVEX DATABASE
+# ============================================
+# Development/Preview Environment
+NEXT_PUBLIC_CONVEX_URL=https://...convex.cloud
+CONVEX_DEPLOY_KEY=dev_...
+# TODO: Run 'npx convex dev' to get these values
+
+# Production Environment (set in Vercel for main branch)
+# NEXT_PUBLIC_CONVEX_URL=https://...convex.cloud
+# CONVEX_DEPLOY_KEY=prod_...
+# Run 'npx convex deploy --prod' to create production deployment
+
+# Convex deployment alias for local CLI usage
+CONVEX_DEPLOYMENT=dev:$PROJECT_NAME
 
 EOF
     fi
 
     if $use_clerk; then
         cat >> .env.local << EOF
-# --------------------------------------------
-# Clerk (Authentication)
-# --------------------------------------------
-# Development instance
+# ============================================
+# CLERK AUTHENTICATION
+# ============================================
+# Development/Preview Environment
 # Get these from: https://dashboard.clerk.com
 # See SETUP_GUIDE.md for detailed instructions
-
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_TODO
 CLERK_SECRET_KEY=sk_test_TODO
 
-# Optional: Clerk Webhook Secret
-CLERK_WEBHOOK_SECRET=whsec_TODO
+# Production Environment (set in Vercel for main branch)
+# NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_TODO
+# CLERK_SECRET_KEY=sk_live_TODO
 
-# Clerk URLs (auto-configured for Next.js)
+# Clerk URLs (same across all environments)
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+
+# Optional: Clerk Webhook Secret
+# CLERK_WEBHOOK_SECRET=whsec_TODO
 
 EOF
     fi
 
     if $use_axiom; then
         cat >> .env.local << EOF
-# --------------------------------------------
-# Axiom (Observability)
-# --------------------------------------------
-# Dataset and token configured via Axiom CLI
-AXIOM_DATASET=
-AXIOM_TOKEN=
-# TODO: Values should be auto-filled by axiom CLI
+# ============================================
+# AXIOM OBSERVABILITY
+# ============================================
+# Development/Preview Environment
+AXIOM_DATASET=$PROJECT_NAME-dev
+AXIOM_TOKEN=xaat_TODO
+AXIOM_ORG_ID=TODO
+# TODO: Run 'axiom auth login' and create dataset
+
+# Production Environment (set in Vercel for main branch)
+# AXIOM_DATASET=$PROJECT_NAME-prod
+# Note: AXIOM_TOKEN and AXIOM_ORG_ID are same across environments
 
 EOF
     fi
 
     if $use_linear; then
         cat >> .env.local << EOF
-# --------------------------------------------
-# Linear (Issue/Project Tracking)
-# --------------------------------------------
+# ============================================
+# LINEAR (Issue/Project Tracking)
+# ============================================
 # Get API key from: https://linear.app/settings/api
 # See SETUP_GUIDE.md for GraphQL setup instructions
-
+# Same key works across all environments
 LINEAR_API_KEY=lin_api_TODO
-LINEAR_WEBHOOK_SECRET=TODO
+LINEAR_TEAM_ID=TODO
+
+# Optional: Webhook secret
+# LINEAR_WEBHOOK_SECRET=TODO
 
 EOF
     fi
@@ -145,14 +164,15 @@ EOF
     # Add AI provider keys
     if $use_ai; then
         cat >> .env.local << EOF
-# --------------------------------------------
-# AI Integration
-# --------------------------------------------
+# ============================================
+# AI INTEGRATION
+# ============================================
+# Same API keys work across all environments (usage-based billing)
 EOF
 
         if [ "$ai_provider" = "openai" ] || [ "$ai_provider" = "both" ]; then
             cat >> .env.local << EOF
-# OpenAI API Key
+# OpenAI API
 # Get from: https://platform.openai.com/api-keys
 OPENAI_API_KEY=sk-proj-TODO
 
@@ -161,7 +181,7 @@ EOF
 
         if [ "$ai_provider" = "anthropic" ] || [ "$ai_provider" = "both" ]; then
             cat >> .env.local << EOF
-# Anthropic API Key
+# Anthropic API
 # Get from: https://console.anthropic.com/settings/keys
 ANTHROPIC_API_KEY=sk-ant-TODO
 
@@ -169,12 +189,24 @@ EOF
         fi
     fi
 
-    # Add common variables
+    # Add application configuration
     cat >> .env.local << EOF
-# --------------------------------------------
-# Application Settings
-# --------------------------------------------
+# ============================================
+# APPLICATION CONFIGURATION
+# ============================================
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+# Production: Set to https://your-domain.com in Vercel
+
+# Environment indicator
+NEXT_PUBLIC_ENVIRONMENT=development
+# Production: NEXT_PUBLIC_ENVIRONMENT=production
+# Preview: NEXT_PUBLIC_ENVIRONMENT=preview
+
+# Data retention (days)
+DATA_RETENTION_DAYS=30
+
+# EU Region Compliance
+NEXT_PUBLIC_EU_REGION=true
 
 EOF
 
@@ -281,6 +313,18 @@ create_setup_guides() {
 # Setup Guide
 
 This guide covers manual setup for services that don't have CLI automation.
+
+## 📚 Important: Vercel Environment Variables
+
+Before setting up individual services, **read the comprehensive guide on Vercel environment variables**:
+
+👉 **See: \`VERCEL_ENVIRONMENT_SETUP.md\`** in the project root
+
+This explains:
+- How Vercel's three environments work (Production/Preview/Development)
+- Which variables to set where
+- How branch-based deployments work
+- Production vs development resource separation
 
 ---
 

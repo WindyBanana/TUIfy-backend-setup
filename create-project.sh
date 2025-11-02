@@ -271,12 +271,19 @@ echo -e "${CYAN}📝 Step 11: Generating Environment Files${NC}"
 generate_env_files "$USE_VERCEL" "$USE_CONVEX" "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$USE_AI" "$AI_PROVIDER"
 echo ""
 
-# Step 12: Create Setup Guides for Manual Services
+# Step 12: Create Setup Guides
+echo -e "${CYAN}📚 Step 12: Creating Setup Guides${NC}"
+
+# Always copy Vercel environment setup guide
+cp "$SCRIPT_DIR/guides/VERCEL_ENVIRONMENT_SETUP.md" .
+echo -e "${GREEN}✓ VERCEL_ENVIRONMENT_SETUP.md created${NC}"
+
+# Create service-specific guides if needed
 if $USE_CLERK || $USE_LINEAR; then
-    echo -e "${CYAN}📚 Step 12: Creating Setup Guides${NC}"
     create_setup_guides "$USE_CLERK" "$USE_LINEAR"
-    echo ""
 fi
+
+echo ""
 
 # Step 13: Validate Build
 echo -e "${CYAN}🔨 Step 13: Validating Project Build${NC}"
