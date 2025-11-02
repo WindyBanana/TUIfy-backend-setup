@@ -8,6 +8,14 @@ Interactive project template generator with feature toggles. Pick your services,
 
 ## 🚀 Features
 
+- **🎯 Interactive TUI Dashboard**: Beautiful checkbox/radio button interface (whiptail/dialog)
+  - Visual feature selection with real-time summary
+  - Automatic fallback to CLI mode if TUI unavailable
+  - Works on Linux and macOS
+- **🌍 Cross-Platform Support**: Automatic platform detection and tool installation
+  - Linux: apt, yum, pacman support
+  - macOS: Auto-installs Homebrew if needed
+  - Intelligent package manager detection
 - **📦 Multiple Package Managers**: Choose between npm, pnpm, or yarn
 - **🎨 Framework Selection**: Next.js 15 (more coming soon)
 - **🔧 Service Integration**: Pick exactly what you need
@@ -32,13 +40,15 @@ Interactive project template generator with feature toggles. Pick your services,
 
 **🐧 Platform Compatibility:**
 - ✅ **Linux** - Fully supported (tested on Ubuntu/Debian)
+  - Auto-detects package manager (apt, yum, pacman)
+  - Interactive TUI dashboard with whiptail/dialog
+- ✅ **macOS** - Fully supported
+  - Auto-installs Homebrew if not present
+  - Cross-platform tool installation via brew
+  - Interactive TUI dashboard with dialog
 - ⚠️ **WSL (Windows Subsystem for Linux)** - Should work, but not fully tested
   - Browser OAuth flows may need manual intervention
   - Use WSL 2 for best compatibility
-- ⚠️ **macOS** - Partially supported
-  - Axiom CLI requires Homebrew (`brew install axiomhq/tap/axiom`)
-  - Other CLIs should work
-  - Some Linux-specific commands may need adjustments
 - ❌ **Windows (native)** - Not supported
   - Use WSL instead
 
@@ -72,21 +82,35 @@ chmod +x create-project.sh
 
 ## 📖 Usage
 
+### Interactive TUI Dashboard (Recommended)
+
+On Linux and macOS, Launchify provides a beautiful Terminal UI (TUI) dashboard:
+
+- **Visual Feature Selection**: Checkbox-based service and feature selection
+- **Radio Button Choices**: Package manager and AI provider selection
+- **Real-time Summary**: See your configuration before proceeding
+- **Keyboard Navigation**: Space to select, Enter to confirm, Arrow keys to navigate
+
+The TUI automatically falls back to CLI mode if whiptail/dialog is not available.
+
 ### Interactive Setup
 
 When you run `./create-project.sh`, you'll be guided through:
 
-1. **Project Name**: Enter your project name (lowercase, hyphens only)
-2. **Package Manager**: Choose npm, pnpm, or yarn
-3. **Framework**: Select Next.js (more frameworks coming soon)
-4. **Service Selection**: Toggle services on/off
-   - Vercel for deployment
-   - Convex for backend/database
-   - Clerk for authentication
-   - Axiom for observability
-   - Linear for project management
-5. **Confirmation**: Review your choices
-6. **Automated Setup**: Sit back while everything is configured
+1. **Platform Detection**: Auto-detects Linux/macOS and installs required tools
+2. **Project Name**: Enter your project name (lowercase, hyphens only)
+3. **Package Manager**: Choose npm, pnpm, or yarn (TUI or CLI)
+4. **Framework**: Select Next.js (more frameworks coming soon)
+5. **Feature Selection**: Toggle services and features (TUI dashboard or CLI)
+   - Services: Vercel, Convex, Clerk, Axiom, Linear
+   - UI: shadcn/ui with dark mode
+   - AI: OpenAI, Anthropic, or both
+   - Admin: Full-featured admin panel
+6. **Confirmation**: Review your configuration summary
+7. **Automated Setup**: Sit back while everything is configured
+   - Vercel secrets set automatically via API
+   - Clerk webhooks configured via Svix API
+   - All environment variables populated
 
 ### Example Session
 
@@ -246,6 +270,11 @@ my-saas-app/
 - ✅ Auto-login via browser
 - ✅ Project creation/linking
 - ✅ `vercel.json` configuration
+- ✅ **Automated production secrets** via Vercel REST API
+  - Sets Clerk, Convex, Axiom secrets automatically
+  - Supports encrypted, plain, and sensitive variable types
+  - Targets production, preview, and development environments
+  - Graceful fallback to manual instructions if API unavailable
 - 🌍 **Environments**:
   - Development: Preview deployments (all branches)
   - Production: Main branch deployments

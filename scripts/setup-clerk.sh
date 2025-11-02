@@ -357,6 +357,60 @@ EOF
 
     echo -e "${GREEN}✓ Environment variables updated${NC}"
 
+    # Step 8: Set Vercel production environment variables (if using Vercel)
+    if $use_vercel; then
+        echo ""
+        echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${CYAN}Step 8: Setting Vercel Production Secrets${NC}"
+        echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo ""
+
+        # Source the Vercel env helper
+        source "$SCRIPT_DIR/scripts/setup-vercel-env.sh" 2>/dev/null || source "$(dirname "$0")/setup-vercel-env.sh"
+
+        # Prepare environment variables array
+        local env_vars=()
+
+        # Add Clerk keys for production
+        env_vars+=("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${CLERK_PUBLISHABLE_KEY}=production,preview=plain")
+        env_vars+=("CLERK_SECRET_KEY=${CLERK_SECRET_KEY}=production,preview=encrypted")
+
+        # Add webhook secret if available
+        if [[ -n "$CLERK_WEBHOOK_SECRET" && "$CLERK_WEBHOOK_SECRET" != "whsec_TODO" ]]; then
+            env_vars+=("CLERK_WEBHOOK_SECRET=${CLERK_WEBHOOK_SECRET}=production,preview=encrypted")
+        fi
+
+        # Add bypass token if using Convex
+        if [[ -n "$BYPASS_TOKEN" ]]; then
+            env_vars+=("CLERK_WEBHOOK_BYPASS_TOKEN=${BYPASS_TOKEN}=production,preview=encrypted")
+        fi
+
+        # Set Clerk URLs (same across all environments)
+        env_vars+=("NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in=production,preview,development=plain")
+        env_vars+=("NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up=production,preview,development=plain")
+        env_vars+=("NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard=production,preview,development=plain")
+        env_vars+=("NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard=production,preview,development=plain")
+
+        # Call Vercel API to set variables
+        setup_vercel_env_vars "$project_name" "${env_vars[@]}"
+
+        if [[ $? -ne 0 ]]; then
+            echo ""
+            echo -e "${YELLOW}⚠️  Vercel API setup skipped or failed${NC}"
+            echo ""
+            echo "Please manually add these to your Vercel dashboard:"
+            echo "  • NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"
+            echo "  • CLERK_SECRET_KEY"
+            echo "  • CLERK_WEBHOOK_SECRET"
+            if [[ -n "$BYPASS_TOKEN" ]]; then
+                echo "  • CLERK_WEBHOOK_BYPASS_TOKEN"
+            fi
+            echo ""
+            echo "Visit: ${CYAN}https://vercel.com/${project_name}/settings/environment-variables${NC}"
+            echo ""
+        fi
+    fi
+
     # Final summary
     echo ""
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"

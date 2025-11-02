@@ -28,6 +28,9 @@ source "$SCRIPT_DIR/scripts/setup-shadcn.sh"
 source "$SCRIPT_DIR/scripts/setup-ai.sh"
 source "$SCRIPT_DIR/scripts/setup-admin.sh"
 source "$SCRIPT_DIR/scripts/utils.sh"
+source "$SCRIPT_DIR/scripts/setup-vercel-env.sh"
+source "$SCRIPT_DIR/scripts/detect-platform.sh"
+source "$SCRIPT_DIR/scripts/interactive-ui.sh"
 
 # Banner
 echo -e "${PURPLE}"
@@ -38,6 +41,10 @@ echo "║        Transform ideas into production apps           ║"
 echo "║                                                       ║"
 echo "╚═══════════════════════════════════════════════════════╝"
 echo -e "${NC}\n"
+
+# Platform Detection
+setup_platform_tools
+echo ""
 
 # Step 1: Project Name
 echo -e "${CYAN}📝 Step 1: Project Configuration${NC}"
@@ -59,17 +66,21 @@ echo -e "${GREEN}✓ Project name: $PROJECT_NAME${NC}\n"
 
 # Step 2: Package Manager Selection
 echo -e "${CYAN}📦 Step 2: Package Manager${NC}"
-echo "Select your package manager:"
-echo "  1) npm (default)"
-echo "  2) pnpm"
-echo "  3) yarn"
-read -p "Choice [1-3] (default: 1): " PKG_MANAGER_CHOICE
 
-case $PKG_MANAGER_CHOICE in
-    2) PACKAGE_MANAGER="pnpm" ;;
-    3) PACKAGE_MANAGER="yarn" ;;
-    *) PACKAGE_MANAGER="npm" ;;
-esac
+# Try interactive UI first, fall back to CLI
+if ! show_package_manager_ui; then
+    echo "Select your package manager:"
+    echo "  1) npm (default)"
+    echo "  2) pnpm"
+    echo "  3) yarn"
+    read -p "Choice [1-3] (default: 1): " PKG_MANAGER_CHOICE
+
+    case $PKG_MANAGER_CHOICE in
+        2) PACKAGE_MANAGER="pnpm" ;;
+        3) PACKAGE_MANAGER="yarn" ;;
+        *) PACKAGE_MANAGER="npm" ;;
+    esac
+fi
 
 echo -e "${GREEN}✓ Package manager: $PACKAGE_MANAGER${NC}\n"
 
@@ -96,65 +107,72 @@ esac
 
 echo -e "${GREEN}✓ Framework: $FRAMEWORK${NC}\n"
 
-# Step 4: Service Selection
-echo -e "${CYAN}🔧 Step 4: Service Selection${NC}"
-echo "Select services to integrate (y/n):"
+# Step 4 & 5: Feature Selection (Interactive UI with CLI fallback)
+echo -e "${CYAN}🔧 Step 4: Feature Selection${NC}"
 
-read -p "  Vercel (Deployment) [Y/n]: " USE_VERCEL
-USE_VERCEL=${USE_VERCEL:-Y}
+# Try interactive UI first, fall back to CLI
+if ! show_feature_selection_ui; then
+    echo -e "${YELLOW}Using CLI mode...${NC}"
+    echo ""
 
-read -p "  Convex (Backend/Database) [Y/n]: " USE_CONVEX
-USE_CONVEX=${USE_CONVEX:-Y}
+    # Service Selection
+    echo "Select services to integrate (y/n):"
 
-read -p "  Clerk (Authentication) [Y/n]: " USE_CLERK
-USE_CLERK=${USE_CLERK:-Y}
+    read -p "  Vercel (Deployment) [Y/n]: " USE_VERCEL
+    USE_VERCEL=${USE_VERCEL:-Y}
 
-read -p "  Axiom (Observability) [y/N]: " USE_AXIOM
-USE_AXIOM=${USE_AXIOM:-N}
+    read -p "  Convex (Backend/Database) [Y/n]: " USE_CONVEX
+    USE_CONVEX=${USE_CONVEX:-Y}
 
-read -p "  Linear (Issue/Project Tracking) [y/N]: " USE_LINEAR
-USE_LINEAR=${USE_LINEAR:-N}
+    read -p "  Clerk (Authentication) [Y/n]: " USE_CLERK
+    USE_CLERK=${USE_CLERK:-Y}
 
-echo ""
+    read -p "  Axiom (Observability) [y/N]: " USE_AXIOM
+    USE_AXIOM=${USE_AXIOM:-N}
 
-# Convert to boolean flags
-[[ $USE_VERCEL =~ ^[Yy]$ ]] && USE_VERCEL=true || USE_VERCEL=false
-[[ $USE_CONVEX =~ ^[Yy]$ ]] && USE_CONVEX=true || USE_CONVEX=false
-[[ $USE_CLERK =~ ^[Yy]$ ]] && USE_CLERK=true || USE_CLERK=false
-[[ $USE_AXIOM =~ ^[Yy]$ ]] && USE_AXIOM=true || USE_AXIOM=false
-[[ $USE_LINEAR =~ ^[Yy]$ ]] && USE_LINEAR=true || USE_LINEAR=false
+    read -p "  Linear (Issue/Project Tracking) [y/N]: " USE_LINEAR
+    USE_LINEAR=${USE_LINEAR:-N}
 
-# Step 5: UI & Features
-echo -e "${CYAN}🎨 Step 5: UI & Features${NC}"
-echo "Select additional features (y/n):"
+    echo ""
 
-read -p "  shadcn/ui + Dark Mode [Y/n]: " USE_SHADCN
-USE_SHADCN=${USE_SHADCN:-Y}
-[[ $USE_SHADCN =~ ^[Yy]$ ]] && USE_SHADCN=true || USE_SHADCN=false
+    # Convert to boolean flags
+    [[ $USE_VERCEL =~ ^[Yy]$ ]] && USE_VERCEL=true || USE_VERCEL=false
+    [[ $USE_CONVEX =~ ^[Yy]$ ]] && USE_CONVEX=true || USE_CONVEX=false
+    [[ $USE_CLERK =~ ^[Yy]$ ]] && USE_CLERK=true || USE_CLERK=false
+    [[ $USE_AXIOM =~ ^[Yy]$ ]] && USE_AXIOM=true || USE_AXIOM=false
+    [[ $USE_LINEAR =~ ^[Yy]$ ]] && USE_LINEAR=true || USE_LINEAR=false
 
-read -p "  AI Integration [y/N]: " USE_AI
-USE_AI=${USE_AI:-N}
-[[ $USE_AI =~ ^[Yy]$ ]] && USE_AI=true || USE_AI=false
+    # UI & Features
+    echo "Select additional features (y/n):"
 
-# AI Provider selection
-AI_PROVIDER="none"
-if $USE_AI; then
-    echo "  Which AI provider?"
-    echo "    1) OpenAI (GPT-4, etc.)"
-    echo "    2) Anthropic (Claude)"
-    echo "    3) Both"
-    read -p "  Choice [1-3]: " AI_CHOICE
-    case $AI_CHOICE in
-        1) AI_PROVIDER="openai" ;;
-        2) AI_PROVIDER="anthropic" ;;
-        3) AI_PROVIDER="both" ;;
-        *) AI_PROVIDER="openai" ;;
-    esac
+    read -p "  shadcn/ui + Dark Mode [Y/n]: " USE_SHADCN
+    USE_SHADCN=${USE_SHADCN:-Y}
+    [[ $USE_SHADCN =~ ^[Yy]$ ]] && USE_SHADCN=true || USE_SHADCN=false
+
+    read -p "  AI Integration [y/N]: " USE_AI
+    USE_AI=${USE_AI:-N}
+    [[ $USE_AI =~ ^[Yy]$ ]] && USE_AI=true || USE_AI=false
+
+    # AI Provider selection
+    AI_PROVIDER="none"
+    if $USE_AI; then
+        echo "  Which AI provider?"
+        echo "    1) OpenAI (GPT-4, etc.)"
+        echo "    2) Anthropic (Claude)"
+        echo "    3) Both"
+        read -p "  Choice [1-3]: " AI_CHOICE
+        case $AI_CHOICE in
+            1) AI_PROVIDER="openai" ;;
+            2) AI_PROVIDER="anthropic" ;;
+            3) AI_PROVIDER="both" ;;
+            *) AI_PROVIDER="openai" ;;
+        esac
+    fi
+
+    read -p "  Admin Panel (requires Convex) [y/N]: " USE_ADMIN
+    USE_ADMIN=${USE_ADMIN:-N}
+    [[ $USE_ADMIN =~ ^[Yy]$ ]] && USE_ADMIN=true || USE_ADMIN=false
 fi
-
-read -p "  Admin Panel (requires Convex) [y/N]: " USE_ADMIN
-USE_ADMIN=${USE_ADMIN:-N}
-[[ $USE_ADMIN =~ ^[Yy]$ ]] && USE_ADMIN=true || USE_ADMIN=false
 
 # Check if admin panel requires Convex
 if $USE_ADMIN && ! $USE_CONVEX; then
@@ -212,22 +230,22 @@ fi
 
 echo ""
 
-# Step 6: Check Dependencies
-echo -e "${CYAN}🔍 Step 6: Checking Dependencies${NC}"
+# Step 5: Check Dependencies
+echo -e "${CYAN}🔍 Step 5: Checking Dependencies${NC}"
 check_dependencies "$USE_VERCEL" "$USE_CONVEX" "$USE_AXIOM" "$PACKAGE_MANAGER"
 echo ""
 
-# Step 7: Install Missing CLIs
-echo -e "${CYAN}📥 Step 7: Installing Missing CLIs${NC}"
+# Step 6: Install Missing CLIs
+echo -e "${CYAN}📥 Step 6: Installing Missing CLIs${NC}"
 install_missing_clis "$USE_VERCEL" "$USE_CONVEX" "$USE_AXIOM"
 echo ""
 
-# Step 8: Create Project
-echo -e "${CYAN}🚀 Step 8: Creating Project${NC}"
+# Step 7: Create Project
+echo -e "${CYAN}🚀 Step 7: Creating Project${NC}"
 create_project "$PROJECT_NAME" "$FRAMEWORK" "$PACKAGE_MANAGER"
 echo ""
 
-# Step 9: Setup Services
+# Step 8: Setup Services
 cd "$PROJECT_NAME"
 
 if $USE_VERCEL; then
@@ -254,7 +272,7 @@ if $USE_CLERK; then
     echo ""
 fi
 
-# Step 10: Setup UI & Features
+# Step 9: Setup UI & Features
 if $USE_SHADCN; then
     echo -e "${CYAN}🎨 Setting up shadcn/ui...${NC}"
     setup_shadcn "$PACKAGE_MANAGER"
@@ -273,13 +291,13 @@ if $USE_ADMIN; then
     echo ""
 fi
 
-# Step 11: Generate Environment Files
-echo -e "${CYAN}📝 Step 11: Generating Environment Files${NC}"
+# Step 10: Generate Environment Files
+echo -e "${CYAN}📝 Step 10: Generating Environment Files${NC}"
 generate_env_files "$USE_VERCEL" "$USE_CONVEX" "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$USE_AI" "$AI_PROVIDER"
 echo ""
 
-# Step 12: Create Setup Guides
-echo -e "${CYAN}📚 Step 12: Creating Setup Guides${NC}"
+# Step 11: Create Setup Guides
+echo -e "${CYAN}📚 Step 11: Creating Setup Guides${NC}"
 
 # Always copy Vercel environment setup guide
 cp "$SCRIPT_DIR/guides/VERCEL_ENVIRONMENT_SETUP.md" .
@@ -292,8 +310,8 @@ fi
 
 echo ""
 
-# Step 13: Validate Build
-echo -e "${CYAN}🔨 Step 13: Validating Project Build${NC}"
+# Step 12: Validate Build
+echo -e "${CYAN}🔨 Step 12: Validating Project Build${NC}"
 echo -e "${BLUE}Running type check...${NC}"
 if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
     pnpm tsc --noEmit
@@ -341,15 +359,15 @@ else
     echo -e "${YELLOW}⚠️  Please fix build errors before deploying${NC}\n"
 fi
 
-# Step 14: Initialize Git
-echo -e "${CYAN}🔧 Step 14: Initializing Git Repository${NC}"
+# Step 13: Initialize Git
+echo -e "${CYAN}🔧 Step 13: Initializing Git Repository${NC}"
 git init
 git add .
 git commit -m "Initial commit: $PROJECT_NAME - Launchify template with automated setup"
 echo -e "${GREEN}✓ Git repository initialized${NC}\n"
 
-# Step 15: Optional GitHub Setup
-echo -e "${CYAN}📦 Step 15: GitHub Repository Setup${NC}"
+# Step 14: Optional GitHub Setup
+echo -e "${CYAN}📦 Step 14: GitHub Repository Setup${NC}"
 echo -e "Do you want to push this project to GitHub now?"
 read -p "Add GitHub remote and push? [y/N]: " SETUP_GITHUB
 SETUP_GITHUB=${SETUP_GITHUB:-N}
