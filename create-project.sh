@@ -36,11 +36,26 @@ source "$SCRIPT_DIR/scripts/interactive-ui.sh"
 echo -e "${PURPLE}"
 echo "╔═══════════════════════════════════════════════════════╗"
 echo "║                                                       ║"
-echo "║                    🚀 LAUNCHIFY 🚀                    ║"
+echo "║                    LAUNCHIFY                          ║"
 echo "║        Transform ideas into production apps           ║"
 echo "║                                                       ║"
 echo "╚═══════════════════════════════════════════════════════╝"
 echo -e "${NC}\n"
+
+# Disclaimer
+echo -e "${YELLOW}DISCLAIMER:${NC}"
+echo "This software is provided AS IS without warranty of any kind."
+echo "You are responsible for reviewing generated code, API costs,"
+echo "security, and compliance. See LICENSE for full terms."
+echo ""
+read -p "Do you accept these terms? [Y/n]: " ACCEPT_TERMS
+ACCEPT_TERMS=${ACCEPT_TERMS:-Y}
+
+if [[ ! $ACCEPT_TERMS =~ ^[Yy]$ ]]; then
+    echo "Setup cancelled."
+    exit 0
+fi
+echo ""
 
 # Safety Check: Prevent running inside launchify directory
 if [ -f "$SCRIPT_DIR/create-project.sh" ] && [ -d "$SCRIPT_DIR/scripts" ] && [ -d "$SCRIPT_DIR/templates" ]; then
@@ -73,7 +88,7 @@ fi
 
 # Security Notice
 echo -e "${CYAN}╔════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║         🔒 SECURITY & PRIVACY NOTICE                       ║${NC}"
+echo -e "${CYAN}║         SECURITY & PRIVACY NOTICE                          ║${NC}"
 echo -e "${CYAN}╚════════════════════════════════════════════════════════════╝${NC}"
 echo ""
 echo -e "${GREEN}✅ Safe Practices This Script Uses:${NC}"
@@ -107,7 +122,7 @@ setup_platform_tools
 echo ""
 
 # Step 1: Project Name
-echo -e "${CYAN}📝 Step 1: Project Configuration${NC}"
+echo -e "${CYAN}Step 1: Project Configuration${NC}"
 read -p "Enter project name (lowercase, hyphens only): " PROJECT_NAME
 
 # Validate project name
@@ -125,7 +140,7 @@ fi
 echo -e "${GREEN}✓ Project name: $PROJECT_NAME${NC}\n"
 
 # Step 2: Package Manager Selection
-echo -e "${CYAN}📦 Step 2: Package Manager${NC}"
+echo -e "${CYAN}Step 2: Package Manager${NC}"
 
 # Try interactive UI first, fall back to CLI
 if ! show_package_manager_ui; then
@@ -145,7 +160,7 @@ fi
 echo -e "${GREEN}✓ Package manager: $PACKAGE_MANAGER${NC}\n"
 
 # Step 3: Framework Selection
-echo -e "${CYAN}🎨 Step 3: Framework${NC}"
+echo -e "${CYAN}Step 3: Framework${NC}"
 echo "Select your framework:"
 echo "  1) Next.js 15 + TypeScript + Tailwind (recommended)"
 echo "  2) Plain React + TypeScript (coming soon)"
@@ -168,7 +183,7 @@ esac
 echo -e "${GREEN}✓ Framework: $FRAMEWORK${NC}\n"
 
 # Step 4 & 5: Feature Selection (Interactive UI with CLI fallback)
-echo -e "${CYAN}🔧 Step 4: Feature Selection${NC}"
+echo -e "${CYAN}Step 4: Feature Selection${NC}"
 
 # Try interactive UI first, fall back to CLI
 if ! show_feature_selection_ui; then
@@ -260,7 +275,7 @@ echo ""
 
 # Summary
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "${CYAN}📋 Configuration Summary:${NC}"
+echo -e "${CYAN}Configuration Summary:${NC}"
 echo -e "  Project: ${GREEN}$PROJECT_NAME${NC}"
 echo -e "  Package Manager: ${GREEN}$PACKAGE_MANAGER${NC}"
 echo -e "  Framework: ${GREEN}$FRAMEWORK${NC}"
@@ -291,12 +306,12 @@ fi
 echo ""
 
 # Step 5: Check Dependencies
-echo -e "${CYAN}🔍 Step 5: Checking Dependencies${NC}"
+echo -e "${CYAN}Step 5: Checking Dependencies${NC}"
 check_dependencies "$USE_VERCEL" "$USE_CONVEX" "$USE_AXIOM" "$PACKAGE_MANAGER"
 echo ""
 
 # Step 6: Install Missing CLIs
-echo -e "${CYAN}📥 Step 6: Installing Missing CLIs${NC}"
+echo -e "${CYAN}Step 6: Installing Missing CLIs${NC}"
 install_missing_clis "$USE_VERCEL" "$USE_CONVEX" "$USE_AXIOM"
 echo ""
 
@@ -309,30 +324,30 @@ echo ""
 cd "$PROJECT_NAME"
 
 if $USE_VERCEL; then
-    echo -e "${CYAN}🔷 Setting up Vercel...${NC}"
+    echo -e "${CYAN}Setting up Vercel...${NC}"
     setup_vercel "$PROJECT_NAME"
     echo ""
 fi
 
 if $USE_CONVEX; then
-    echo -e "${CYAN}🔶 Setting up Convex...${NC}"
+    echo -e "${CYAN}Setting up Convex...${NC}"
     setup_convex "$PROJECT_NAME" "$PACKAGE_MANAGER"
     echo ""
 fi
 
 if $USE_AXIOM; then
-    echo -e "${CYAN}🔸 Setting up Axiom Observability...${NC}"
-    echo -e "${BLUE}ℹ️  After setup, you'll need to run: ${GREEN}axiom auth login${NC}"
-    echo -e "${BLUE}   and create an API token${NC}"
+    echo -e "${CYAN}Setting up Axiom Observability...${NC}"
+    echo -e "${BLUE}After setup, you'll need to run: ${GREEN}axiom auth login${NC}"
+    echo -e "${BLUE}and create an API token${NC}"
     echo ""
     setup_axiom "$PROJECT_NAME"
     echo ""
 fi
 
 if $USE_CLERK; then
-    echo -e "${CYAN}🔐 Setting up Clerk Authentication...${NC}"
-    echo -e "${BLUE}ℹ️  This will set up webhooks and configure Clerk automatically${NC}"
-    echo -e "${BLUE}   You'll need your Clerk API keys from: ${CYAN}https://dashboard.clerk.com${NC}"
+    echo -e "${CYAN}Setting up Clerk Authentication...${NC}"
+    echo -e "${BLUE}This will set up webhooks and configure Clerk automatically${NC}"
+    echo -e "${BLUE}You'll need your Clerk API keys from: ${CYAN}https://dashboard.clerk.com${NC}"
     echo ""
 
     if setup_clerk "$USE_CONVEX" "$USE_VERCEL" "$PROJECT_NAME"; then
@@ -341,28 +356,28 @@ if $USE_CLERK; then
     else
         CLERK_AUTOMATED=false
         echo -e "${YELLOW}⚠️  Clerk needs manual configuration${NC}"
-        echo -e "${BLUE}   See the manual setup summary at the end${NC}"
+        echo -e "${BLUE}See the manual setup summary at the end${NC}"
     fi
     echo ""
 fi
 
 # Step 9: Setup UI & Features
 if $USE_SHADCN; then
-    echo -e "${CYAN}🎨 Setting up shadcn/ui...${NC}"
+    echo -e "${CYAN}Setting up shadcn/ui...${NC}"
     setup_shadcn "$PACKAGE_MANAGER"
     echo ""
 fi
 
 if $USE_AI; then
-    echo -e "${CYAN}🤖 Setting up AI Integration...${NC}"
+    echo -e "${CYAN}Setting up AI Integration...${NC}"
     if [ "$AI_PROVIDER" = "openai" ]; then
-        echo -e "${BLUE}ℹ️  Get your API key from: ${CYAN}https://platform.openai.com/api-keys${NC}"
+        echo -e "${BLUE}Get your API key from: ${CYAN}https://platform.openai.com/api-keys${NC}"
     elif [ "$AI_PROVIDER" = "anthropic" ]; then
-        echo -e "${BLUE}ℹ️  Get your API key from: ${CYAN}https://console.anthropic.com/settings/keys${NC}"
+        echo -e "${BLUE}Get your API key from: ${CYAN}https://console.anthropic.com/settings/keys${NC}"
     elif [ "$AI_PROVIDER" = "both" ]; then
-        echo -e "${BLUE}ℹ️  You'll need API keys from both:"
-        echo -e "${BLUE}   OpenAI: ${CYAN}https://platform.openai.com/api-keys${NC}"
-        echo -e "${BLUE}   Anthropic: ${CYAN}https://console.anthropic.com/settings/keys${NC}"
+        echo -e "${BLUE}You'll need API keys from both:${NC}"
+        echo -e "${BLUE}OpenAI: ${CYAN}https://platform.openai.com/api-keys${NC}"
+        echo -e "${BLUE}Anthropic: ${CYAN}https://console.anthropic.com/settings/keys${NC}"
     fi
     echo ""
     setup_ai "$PACKAGE_MANAGER" "$AI_PROVIDER"
@@ -370,14 +385,14 @@ if $USE_AI; then
 fi
 
 if $USE_ADMIN; then
-    echo -e "${CYAN}👨‍💼 Setting up Admin Panel...${NC}"
+    echo -e "${CYAN}Setting up Admin Panel...${NC}"
     setup_admin_panel "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$ADMIN_PROD_ENABLED"
     echo ""
 fi
 
 # Step 10: Generate Environment Files
-echo -e "${CYAN}📝 Step 10: Generating Environment Files${NC}"
-echo -e "${YELLOW}🔒 Security Reminder:${NC}"
+echo -e "${CYAN}Step 10: Generating Environment Files${NC}"
+echo -e "${YELLOW}Security Reminder:${NC}"
 echo -e "   • .env.local contains your secrets - ${GREEN}stored locally only${NC}"
 echo -e "   • ${RED}Never commit .env files to Git${NC}"
 echo -e "   • Production secrets set separately in Vercel dashboard"
@@ -385,11 +400,11 @@ echo ""
 generate_env_files "$USE_VERCEL" "$USE_CONVEX" "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$USE_AI" "$AI_PROVIDER"
 echo ""
 echo -e "${GREEN}✓ Environment files created${NC}"
-echo -e "${BLUE}ℹ️  .env.local is already in .gitignore - safe from Git${NC}"
+echo -e "${BLUE}.env.local is already in .gitignore - safe from Git${NC}"
 echo ""
 
 # Step 11: Create Setup Guides
-echo -e "${CYAN}📚 Step 11: Creating Setup Guides${NC}"
+echo -e "${CYAN}Step 11: Creating Setup Guides${NC}"
 
 # Always copy Vercel environment setup guide
 cp "$SCRIPT_DIR/guides/VERCEL_ENVIRONMENT_SETUP.md" .
@@ -403,7 +418,7 @@ fi
 echo ""
 
 # Step 12: Validate Build
-echo -e "${CYAN}🔨 Step 12: Validating Project Build${NC}"
+echo -e "${CYAN}Step 12: Validating Project Build${NC}"
 echo -e "${BLUE}Running type check...${NC}"
 if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
     pnpm tsc --noEmit
@@ -452,14 +467,14 @@ else
 fi
 
 # Step 13: Initialize Git
-echo -e "${CYAN}🔧 Step 13: Initializing Git Repository${NC}"
+echo -e "${CYAN}Step 13: Initializing Git Repository${NC}"
 git init
 git add .
 git commit -m "Initial commit: $PROJECT_NAME - Launchify template with automated setup"
 echo -e "${GREEN}✓ Git repository initialized${NC}\n"
 
 # Step 14: Optional GitHub Setup
-echo -e "${CYAN}📦 Step 14: GitHub Repository Setup${NC}"
+echo -e "${CYAN}Step 14: GitHub Repository Setup${NC}"
 echo -e "Do you want to push this project to GitHub now?"
 read -p "Add GitHub remote and push? [y/N]: " SETUP_GITHUB
 SETUP_GITHUB=${SETUP_GITHUB:-N}
@@ -493,7 +508,7 @@ if [[ $SETUP_GITHUB =~ ^[Yy]$ ]]; then
         echo -e "${YELLOW}⚠️  No repository URL provided. Skipping push.${NC}\n"
     fi
 else
-    echo -e "${BLUE}ℹ️  Skipping GitHub setup. You can push later with:${NC}"
+    echo -e "${BLUE}Skipping GitHub setup. You can push later with:${NC}"
     echo -e "  ${CYAN}git remote add origin <your-repo-url>${NC}"
     echo -e "  ${CYAN}git branch -M main${NC}"
     echo -e "  ${CYAN}git push -u origin main${NC}\n"
@@ -502,11 +517,11 @@ fi
 # Final Summary
 echo -e "${GREEN}╔═══════════════════════════════════════════════════════╗${NC}"
 echo -e "${GREEN}║                                                       ║${NC}"
-echo -e "${GREEN}║          🎉 PROJECT SETUP COMPLETE! 🎉               ║${NC}"
+echo -e "${GREEN}║          🚀 PROJECT SETUP COMPLETE! 🚀               ║${NC}"
 echo -e "${GREEN}║                                                       ║${NC}"
 echo -e "${GREEN}╚═══════════════════════════════════════════════════════╝${NC}\n"
 
-echo -e "${CYAN}📂 Project created at: ${GREEN}./$PROJECT_NAME${NC}\n"
+echo -e "${CYAN}Project created at: ${GREEN}./$PROJECT_NAME${NC}\n"
 
 # Show detailed manual setup summary
 CLERK_AUTOMATED=${CLERK_AUTOMATED:-false}

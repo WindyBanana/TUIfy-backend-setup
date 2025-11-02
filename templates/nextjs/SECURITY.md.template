@@ -1,4 +1,4 @@
-# 🔒 Security & Environment Variables
+# Security & Environment Variables
 
 ## Critical Security Notice
 
@@ -429,12 +429,12 @@ NEXT_PUBLIC_CONVEX_URL=https://prod-xyz789.convex.cloud
 ## Summary
 
 **Key Takeaways:**
-1. 🔒 **Never commit `.env` files to Git**
+1. **Never commit `.env` files to Git**
 2. ✅ **Development secrets in `.env.local`** (local only)
 3. ✅ **Production secrets in Vercel dashboard** (encrypted)
-4. 🔄 **Rotate secrets regularly**
-5. 🛡️ **Different secrets for dev/prod**
-6. 📱 **Public variables (`NEXT_PUBLIC_*`) safe in browser**
-7. 🚫 **Secret variables server-side only**
+4. **Rotate secrets regularly**
+5. **Different secrets for dev/prod**
+6. **Public variables (`NEXT_PUBLIC_*`) safe in browser**
+7. **Secret variables server-side only**
 
-Your security is our priority. Follow these practices and your application will be safe! 🔐
+Your security is our priority. Follow these practices and your application will be safe!

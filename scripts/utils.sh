@@ -332,7 +332,7 @@ create_setup_guides() {
 
 This guide covers manual setup for services that don't have CLI automation.
 
-## 📚 Important: Vercel Environment Variables
+## Important: Vercel Environment Variables
 
 Before setting up individual services, **read the comprehensive guide on Vercel environment variables**:
 
@@ -350,7 +350,7 @@ EOF
 
     if $use_clerk; then
         cat >> SETUP_GUIDE.md << EOF
-## 🔐 Clerk (Authentication)
+## Clerk (Authentication)
 
 Clerk requires manual dashboard setup. Follow these steps:
 
@@ -572,7 +572,7 @@ show_manual_setup_summary() {
     # Check if Clerk was automated
     if $use_clerk && ! $clerk_automated; then
         needs_manual=true
-        echo -e "${CYAN}🔐 Clerk Authentication${NC}"
+        echo -e "${CYAN}Clerk Authentication${NC}"
         echo -e "   ${YELLOW}Action needed:${NC} Add API keys to .env.local"
         echo ""
         echo -e "   1. Go to ${CYAN}https://dashboard.clerk.com${NC}"
@@ -582,13 +582,13 @@ show_manual_setup_summary() {
         echo -e "      ${GREEN}NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY${NC}=pk_test_..."
         echo -e "      ${GREEN}CLERK_SECRET_KEY${NC}=sk_test_..."
         echo ""
-        echo -e "   ${BLUE}ℹ️  See SETUP_GUIDE.md for detailed instructions${NC}"
+        echo -e "   ${BLUE}See SETUP_GUIDE.md for detailed instructions${NC}"
         echo ""
     fi
 
     if $use_axiom; then
         needs_manual=true
-        echo -e "${CYAN}🔸 Axiom Observability${NC}"
+        echo -e "${CYAN}Axiom Observability${NC}"
         echo -e "   ${YELLOW}Action needed:${NC} Complete dataset and token setup"
         echo ""
         echo -e "   Run these commands:"
@@ -605,7 +605,7 @@ show_manual_setup_summary() {
 
     if $use_linear; then
         needs_manual=true
-        echo -e "${CYAN}📋 Linear Issue Tracking${NC}"
+        echo -e "${CYAN}Linear Issue Tracking${NC}"
         echo -e "   ${YELLOW}Action needed:${NC} Get API key"
         echo ""
         echo -e "   1. Go to ${CYAN}https://linear.app/settings/api${NC}"
@@ -615,14 +615,14 @@ show_manual_setup_summary() {
         echo -e "      ${GREEN}LINEAR_API_KEY${NC}=lin_api_..."
         echo -e "      ${GREEN}LINEAR_TEAM_ID${NC}=your-team-id"
         echo ""
-        echo -e "   ${BLUE}ℹ️  See SETUP_GUIDE.md for GraphQL examples${NC}"
+        echo -e "   ${BLUE}See SETUP_GUIDE.md for GraphQL examples${NC}"
         echo ""
     fi
 
     if $use_ai; then
         needs_manual=true
         if [ "$ai_provider" = "openai" ] || [ "$ai_provider" = "both" ]; then
-            echo -e "${CYAN}🤖 OpenAI API${NC}"
+            echo -e "${CYAN}OpenAI API${NC}"
             echo -e "   ${YELLOW}Action needed:${NC} Get API key"
             echo ""
             echo -e "   1. Go to ${CYAN}https://platform.openai.com/api-keys${NC}"
@@ -634,7 +634,7 @@ show_manual_setup_summary() {
         fi
 
         if [ "$ai_provider" = "anthropic" ] || [ "$ai_provider" = "both" ]; then
-            echo -e "${CYAN}🤖 Anthropic API (Claude)${NC}"
+            echo -e "${CYAN}Anthropic API (Claude)${NC}"
             echo -e "   ${YELLOW}Action needed:${NC} Get API key"
             echo ""
             echo -e "   1. Go to ${CYAN}https://console.anthropic.com/settings/keys${NC}"
@@ -668,7 +668,7 @@ show_manual_setup_summary() {
     fi
 
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${BLUE}📚 Documentation:${NC}"
+    echo -e "${BLUE}Documentation:${NC}"
     echo -e "  • ${CYAN}.env.local${NC} - All environment variables with inline comments"
     echo -e "  • ${CYAN}SETUP_GUIDE.md${NC} - Step-by-step setup instructions"
     echo -e "  • ${CYAN}README.md${NC} - Project overview and usage"
