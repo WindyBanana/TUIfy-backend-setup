@@ -71,6 +71,37 @@ if [ -f "$SCRIPT_DIR/create-project.sh" ] && [ -d "$SCRIPT_DIR/scripts" ] && [ -
     fi
 fi
 
+# Security Notice
+echo -e "${CYAN}╔════════════════════════════════════════════════════════════╗${NC}"
+echo -e "${CYAN}║         🔒 SECURITY & PRIVACY NOTICE                       ║${NC}"
+echo -e "${CYAN}╚════════════════════════════════════════════════════════════╝${NC}"
+echo ""
+echo -e "${GREEN}✅ Safe Practices This Script Uses:${NC}"
+echo ""
+echo -e "  ${BLUE}What Gets Committed to Git:${NC}"
+echo -e "    • Project code and configuration files"
+echo -e "    • Templates and .gitignore"
+echo -e "    • Setup guides and documentation"
+echo ""
+echo -e "  ${GREEN}What NEVER Gets Committed:${NC}"
+echo -e "    • ${RED}.env.local${NC} - Your development secrets (in .gitignore)"
+echo -e "    • ${RED}.env.production${NC} - Production secrets (in .gitignore)"
+echo -e "    • ${RED}API keys and tokens${NC} - Never stored in Git"
+echo ""
+echo -e "  ${BLUE}How Environment Variables Are Set:${NC}"
+echo -e "    • ${CYAN}Manual Entry:${NC} You type them when prompted (Clerk, Linear, AI)"
+echo -e "    • ${CYAN}Vercel API:${NC} Sent directly to Vercel cloud (encrypted)"
+echo -e "    • ${CYAN}Convex CLI:${NC} Managed by Convex deployment"
+echo -e "    • ${CYAN}Axiom CLI:${NC} Managed by Axiom cloud"
+echo ""
+echo -e "  ${YELLOW}⚠️  Important:${NC}"
+echo -e "    • Secrets stored ${GREEN}locally in .env.local${NC} (on your machine only)"
+echo -e "    • Production secrets set ${GREEN}in Vercel dashboard${NC} (encrypted)"
+echo -e "    • ${RED}Never commit .env files to Git${NC} (already in .gitignore)"
+echo ""
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+
 # Platform Detection
 setup_platform_tools
 echo ""
@@ -346,7 +377,15 @@ fi
 
 # Step 10: Generate Environment Files
 echo -e "${CYAN}📝 Step 10: Generating Environment Files${NC}"
+echo -e "${YELLOW}🔒 Security Reminder:${NC}"
+echo -e "   • .env.local contains your secrets - ${GREEN}stored locally only${NC}"
+echo -e "   • ${RED}Never commit .env files to Git${NC}"
+echo -e "   • Production secrets set separately in Vercel dashboard"
+echo ""
 generate_env_files "$USE_VERCEL" "$USE_CONVEX" "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$USE_AI" "$AI_PROVIDER"
+echo ""
+echo -e "${GREEN}✓ Environment files created${NC}"
+echo -e "${BLUE}ℹ️  .env.local is already in .gitignore - safe from Git${NC}"
 echo ""
 
 # Step 11: Create Setup Guides

@@ -49,6 +49,18 @@ create_project() {
     fi
 
     echo -e "${GREEN}✓ Project created${NC}"
+
+    # Copy security-hardened .gitignore
+    if [ -f "$SCRIPT_DIR/templates/nextjs/.gitignore.template" ]; then
+        cp "$SCRIPT_DIR/templates/nextjs/.gitignore.template" "$project_name/.gitignore"
+        echo -e "${GREEN}✓ Security-hardened .gitignore installed${NC}"
+    fi
+
+    # Copy SECURITY.md
+    if [ -f "$SCRIPT_DIR/templates/nextjs/SECURITY.md.template" ]; then
+        cp "$SCRIPT_DIR/templates/nextjs/SECURITY.md.template" "$project_name/SECURITY.md"
+        echo -e "${GREEN}✓ Security documentation installed${NC}"
+    fi
 }
 
 # Generate environment files based on selected services
