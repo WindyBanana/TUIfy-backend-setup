@@ -1,4 +1,4 @@
-# 🚀 Launchify
+# Launchify
 
 **Transform your idea into a production-ready project**
 
@@ -6,39 +6,39 @@ Interactive project template generator with feature toggles. Pick your services,
 
 ---
 
-## 🚀 Features
+## Features
 
-- **🎯 Interactive TUI Dashboard**: Beautiful checkbox/radio button interface (whiptail/dialog)
+- **Interactive TUI Dashboard**: Beautiful checkbox/radio button interface (whiptail/dialog)
   - Visual feature selection with real-time summary
   - Automatic fallback to CLI mode if TUI unavailable
   - Works on Linux and macOS
-- **🌍 Cross-Platform Support**: Automatic platform detection and tool installation
+- **Cross-Platform Support**: Automatic platform detection and tool installation
   - Linux: apt, yum, pacman support
   - macOS: Auto-installs Homebrew if needed
   - Intelligent package manager detection
-- **📦 Multiple Package Managers**: Choose between npm, pnpm, or yarn
-- **🎨 Framework Selection**: Next.js 15 (more coming soon)
-- **🔧 Service Integration**: Pick exactly what you need
+- **Multiple Package Managers**: Choose between npm, pnpm, or yarn
+- **Framework Selection**: Next.js 15 (more coming soon)
+- **Service Integration**: Pick exactly what you need
   - ✅ **Vercel** - Deployment (auto-configured with dev/prod environments)
   - ✅ **Convex** - Serverless backend/database (auto-configured with dev/prod deployments)
   - ✅ **Clerk** - Authentication (fully automated via Svix API + webhook setup)
   - ✅ **Axiom** - Observability (auto-configured with CLI)
-  - 📋 **Linear** - Issue/project tracking (guided GraphQL setup)
-- **🎨 UI & Features**: Optional enhancements
+  - **Linear** - Issue/project tracking (guided GraphQL setup)
+- **UI & Features**: Optional enhancements
   - ✅ **shadcn/ui** - Beautiful component library with dark mode support
   - ✅ **AI Integration** - OpenAI and/or Anthropic with ready-to-use utilities
   - ✅ **Admin Panel** - Full-featured admin dashboard (requires Convex)
-- **⚡ Automated Setup**: CLIs handle everything automatically where possible
-- **📝 Guided Manual Setup**: Clear instructions for services without CLIs
-- **🌍 Dual Environments**: Development and production configurations out of the box
-- **🔐 Environment Variables**: Auto-generated `.env` files with helpful comments
-- **📚 Documentation**: Complete setup guides included in generated project
+- **Automated Setup**: CLIs handle everything automatically where possible
+- **Guided Manual Setup**: Clear instructions for services without CLIs
+- **Dual Environments**: Development and production configurations out of the box
+- **Environment Variables**: Auto-generated `.env` files with helpful comments
+- **Documentation**: Complete setup guides included in generated project
 
 ---
 
-## 📋 Prerequisites & Platform Support
+## Prerequisites & Platform Support
 
-**🐧 Platform Compatibility:**
+**Platform Compatibility:**
 - ✅ **Linux** - Fully supported (tested on Ubuntu/Debian)
   - Auto-detects package manager (apt, yum, pacman)
   - Interactive TUI dashboard with whiptail/dialog
@@ -62,7 +62,7 @@ The script will check for these and help you install missing dependencies. Servi
 
 ---
 
-## 🎯 Quick Start
+## Quick Start
 
 ```bash
 # 1. Clone this repository
@@ -80,7 +80,7 @@ chmod +x create-project.sh
 
 ---
 
-## 📖 Usage
+## Usage
 
 ### Interactive TUI Dashboard (Recommended)
 
@@ -124,11 +124,11 @@ $ ./create-project.sh
 ║                                                       ║
 ╚═══════════════════════════════════════════════════════╝
 
-📝 Step 1: Project Configuration
+Step 1: Project Configuration
 Enter project name: my-saas-app
 ✓ Project name: my-saas-app
 
-📦 Step 2: Package Manager
+Step 2: Package Manager
 Select your package manager:
   1) npm (default)
   2) pnpm
@@ -136,13 +136,13 @@ Select your package manager:
 Choice [1-3]: 1
 ✓ Package manager: npm
 
-🎨 Step 3: Framework
+Step 3: Framework
 Select your framework:
   1) Next.js 15 + TypeScript + Tailwind (recommended)
 Choice [1]: 1
 ✓ Framework: nextjs
 
-🔧 Step 4: Service Selection
+Step 4: Service Selection
 Select services to integrate (y/n):
   Vercel (Deployment) [Y/n]: y
   Convex (Backend/Database) [Y/n]: y
@@ -151,7 +151,7 @@ Select services to integrate (y/n):
   Linear (Project Management) [y/N]: n
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 Configuration Summary:
+Configuration Summary:
   Project: my-saas-app
   Package Manager: npm
   Framework: nextjs
@@ -165,7 +165,7 @@ Select services to integrate (y/n):
 
 Proceed with setup? [Y/n]: y
 
-🔍 Checking Dependencies...
+Step 5: Checking Dependencies...
 ✓ Node.js v20.10.0
 ✓ npm 10.2.3
 ✓ Git 2.43.0
@@ -175,30 +175,30 @@ Proceed with setup? [Y/n]: y
 🚀 Creating Project...
 ✓ Next.js project created
 
-🔷 Setting up Vercel...
+Setting up Vercel...
 ✓ Logged in to Vercel
 ✓ Vercel project linked
 
-🔶 Setting up Convex...
+Setting up Convex...
 ✓ Convex development deployment initialized
 
-📝 Generating Environment Files...
+Step 10: Generating Environment Files...
 ✓ .env.local created
 ✓ .env.production.template created
 
-📚 Creating Setup Guides...
+Step 11: Creating Setup Guides...
 ✓ SETUP_GUIDE.md created
 
-🔧 Initializing Git Repository...
+Step 13: Initializing Git Repository...
 ✓ Git repository initialized
 
 ╔═══════════════════════════════════════════════════════╗
 ║                                                       ║
-║          🎉 PROJECT SETUP COMPLETE! 🎉               ║
+║          🚀 PROJECT SETUP COMPLETE! 🚀               ║
 ║                                                       ║
 ╚═══════════════════════════════════════════════════════╝
 
-📂 Project created at: ./my-saas-app
+Project created at: ./my-saas-app
 
 Next steps:
   1. cd my-saas-app
@@ -208,12 +208,12 @@ Next steps:
   5. git remote add origin <your-repo-url>
   6. git push -u origin main
 
-✨ Happy coding!
+Happy coding!
 ```
 
 ---
 
-## 🔧 What Gets Generated
+## What Gets Generated
 
 After running the script, your project will have:
 
@@ -262,7 +262,7 @@ my-saas-app/
 
 ---
 
-## 🎛️ Service Details
+## Service Details
 
 ### Automated Setup (Via CLI)
 
@@ -386,7 +386,7 @@ ADMIN_ALLOWED_EMAILS=you@example.com,admin@example.com
 
 ---
 
-## 📝 After Setup
+## After Setup
 
 ### 1. Configure Manual Services
 
@@ -431,7 +431,7 @@ Add production environment variables in Vercel dashboard.
 
 ---
 
-## 🛠️ Customization
+## Customization
 
 ### Adding More Frameworks
 
@@ -453,7 +453,7 @@ To add new service integrations:
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### "Command not found: vercel"
 
@@ -497,7 +497,7 @@ brew install axiomhq/tap/axiom
 
 ---
 
-## 📚 Resources
+## Resources
 
 ### Official Documentation
 
@@ -516,7 +516,7 @@ brew install axiomhq/tap/axiom
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please:
 
@@ -528,19 +528,19 @@ Contributions are welcome! Please:
 
 ---
 
-## 📄 License
+## License
 
 MIT License - feel free to use this for any project!
 
 ---
 
-## 🙏 Credits
+## Credits
 
 Built for developers who want to spend time building features, not configuring boilerplate.
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] Support for more frameworks (React, Vue, Svelte)
 - [ ] Support for more backends (Supabase, Firebase, PlanetScale)
@@ -555,6 +555,6 @@ Built for developers who want to spend time building features, not configuring b
 
 ---
 
-**Happy coding! 🚀**
+**Happy coding!**
 
 Questions or issues? Open an issue on GitHub.
