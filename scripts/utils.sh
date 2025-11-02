@@ -20,6 +20,8 @@ create_project() {
                 --no-src-dir \
                 --import-alias "@/*" \
                 --turbopack \
+                --eslint \
+                --no-react-compiler \
                 --no-git
         elif [ "$package_manager" = "yarn" ]; then
             yarn create next-app "$project_name" \
@@ -29,6 +31,8 @@ create_project() {
                 --no-src-dir \
                 --import-alias "@/*" \
                 --turbopack \
+                --eslint \
+                --no-react-compiler \
                 --no-git
         else
             npx create-next-app@latest "$project_name" \
@@ -38,6 +42,8 @@ create_project() {
                 --no-src-dir \
                 --import-alias "@/*" \
                 --turbopack \
+                --eslint \
+                --no-react-compiler \
                 --no-git
         fi
     fi

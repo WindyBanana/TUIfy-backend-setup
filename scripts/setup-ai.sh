@@ -421,4 +421,3 @@ EOF
     echo -e "    2. Use the unified API: ${CYAN}import { generateText } from '@/lib/ai'${NC}"
     echo -e "    3. Try the example: ${CYAN}import { AIChatExample } from '@/components/examples/ai-chat-example'${NC}"
 }
-EOF

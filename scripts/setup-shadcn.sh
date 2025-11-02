@@ -62,9 +62,10 @@ EOF
     # Update tailwind.config.ts with shadcn theme
     cat > tailwind.config.ts << 'EOF'
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -114,7 +115,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 };
 
 export default config;
@@ -187,10 +188,11 @@ EOF
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 }
 EOF
@@ -252,9 +254,8 @@ EOF
 
 import * as React from "react"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
-import { type ThemeProviderProps } from "next-themes/dist/types"
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+export function ThemeProvider({ children, ...props }: React.ComponentProps<typeof NextThemesProvider>) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
 EOF
@@ -272,4 +273,3 @@ EOF
     echo -e "    3. Install more components: ${CYAN}npx shadcn@latest add <component>${NC}"
     echo -e "\n  ${YELLOW}More components:${NC} https://ui.shadcn.com/docs/components"
 }
-EOF

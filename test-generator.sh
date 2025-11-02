@@ -40,11 +40,12 @@ echo "Starting test..."
 echo ""
 
 # Create test input file
+# Testing minimal setup: npm + Next.js + shadcn/ui (no auth services)
 cat > /tmp/launchify-test-input.txt << EOF
 $TEST_PROJECT_NAME
 1
 1
-y
+n
 n
 n
 n

@@ -378,4 +378,3 @@ EOF
     fi
     echo -e "    - Implement proper authentication checks in Convex functions"
 }
-EOF
