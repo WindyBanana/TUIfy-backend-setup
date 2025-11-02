@@ -1,8 +1,8 @@
-# Fullstack Project Template Generator
+# 🚀 Launchify
 
-**Zero-config setup for production-ready applications**
+**Transform your idea into a production-ready project**
 
-Automate the tedious setup of modern web projects with this interactive CLI tool. Select your services, answer a few questions, and get a fully configured project ready to push to GitHub and start coding.
+Interactive project template generator with feature toggles. Pick your services, customize your stack, and get a fully configured Next.js project ready to launch. Automates setup where CLIs exist (Vercel, Convex, Axiom), provides guided config for the rest (Clerk, Linear).
 
 ---
 
@@ -45,7 +45,7 @@ Service CLIs will be installed automatically if you select those services.
 ```bash
 # 1. Clone this repository
 git clone <this-repo-url>
-cd fullstack-project-init
+cd launchify
 
 # 2. Make the script executable
 chmod +x create-project.sh

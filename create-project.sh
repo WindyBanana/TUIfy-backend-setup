@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Fullstack Project Template Generator
-# Creates a production-ready project with automated service setup
+# Launchify - Project Template Generator
+# Transform your idea into a production-ready project with automated service setup
 
 set -e  # Exit on error
 
@@ -32,8 +32,8 @@ source "$SCRIPT_DIR/scripts/utils.sh"
 echo -e "${PURPLE}"
 echo "╔═══════════════════════════════════════════════════════╗"
 echo "║                                                       ║"
-echo "║     FULLSTACK PROJECT TEMPLATE GENERATOR             ║"
-echo "║     Zero-config setup for production-ready apps      ║"
+echo "║                    🚀 LAUNCHIFY 🚀                    ║"
+echo "║        Transform ideas into production apps           ║"
 echo "║                                                       ║"
 echo "╚═══════════════════════════════════════════════════════╝"
 echo -e "${NC}\n"
