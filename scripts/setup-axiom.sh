@@ -7,11 +7,25 @@ setup_axiom() {
 
     echo -e "${BLUE}Setting up Axiom...${NC}"
 
+    # Verify Axiom CLI is installed and working
+    if ! command -v axiom &> /dev/null; then
+        echo -e "${RED}✗ Axiom CLI not found${NC}"
+        echo -e "${YELLOW}⚠️  Skipping Axiom setup${NC}"
+        echo -e "${CYAN}Install manually: https://axiom.co/docs/reference/cli#installation${NC}"
+        echo -e "${CYAN}Then run: axiom auth login${NC}"
+        return 1
+    fi
+
     # Check if user is logged in to Axiom
     if ! axiom auth status &> /dev/null; then
         echo -e "${YELLOW}⚠️  Not logged in to Axiom${NC}"
         echo -e "${CYAN}Opening browser for login...${NC}"
-        axiom auth login
+        if ! axiom auth login; then
+            echo -e "${RED}✗ Axiom login failed${NC}"
+            echo -e "${YELLOW}⚠️  Continuing without Axiom setup${NC}"
+            echo -e "${CYAN}Run 'axiom auth login' manually later${NC}"
+            return 1
+        fi
     else
         echo -e "${GREEN}✓ Logged in to Axiom${NC}"
     fi

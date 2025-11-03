@@ -33,25 +33,35 @@ install_missing_clis() {
 
             # Detect OS and install accordingly
             if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-                # Linux installation
-                curl -L https://github.com/axiomhq/cli/releases/latest/download/axiom_linux_amd64 -o /tmp/axiom
-                chmod +x /tmp/axiom
-                sudo mv /tmp/axiom /usr/local/bin/axiom
+                # Linux installation with proper error checking
+                if curl -fsSL https://github.com/axiomhq/cli/releases/latest/download/axiom_linux_amd64 -o /tmp/axiom; then
+                    chmod +x /tmp/axiom
+                    # Verify it's a valid binary
+                    if file /tmp/axiom | grep -q "executable"; then
+                        sudo mv /tmp/axiom /usr/local/bin/axiom
+                        echo -e "${GREEN}✓ Axiom CLI installed${NC}"
+                        installed_any=true
+                    else
+                        echo -e "${YELLOW}⚠️  Downloaded file is not a valid binary${NC}"
+                        echo -e "${CYAN}Please install manually: https://axiom.co/docs/reference/cli#installation${NC}"
+                        rm -f /tmp/axiom
+                    fi
+                else
+                    echo -e "${YELLOW}⚠️  Failed to download Axiom CLI${NC}"
+                    echo -e "${CYAN}Please install manually: https://axiom.co/docs/reference/cli#installation${NC}"
+                fi
             elif [[ "$OSTYPE" == "darwin"* ]]; then
                 # macOS installation
-                brew install axiomhq/tap/axiom
+                if brew install axiomhq/tap/axiom; then
+                    echo -e "${GREEN}✓ Axiom CLI installed${NC}"
+                    installed_any=true
+                else
+                    echo -e "${YELLOW}⚠️  Failed to install Axiom CLI via Homebrew${NC}"
+                    echo -e "${CYAN}Please install manually: https://axiom.co/docs/reference/cli#installation${NC}"
+                fi
             else
                 echo -e "${YELLOW}⚠️  Unsupported OS for Axiom CLI auto-install${NC}"
                 echo -e "${CYAN}Please install manually: https://axiom.co/docs/reference/cli#installation${NC}"
-                return
-            fi
-
-            if [ $? -eq 0 ]; then
-                echo -e "${GREEN}✓ Axiom CLI installed${NC}"
-                installed_any=true
-            else
-                echo -e "${YELLOW}⚠️  Failed to install Axiom CLI automatically${NC}"
-                echo -e "${CYAN}Install manually: https://axiom.co/docs/reference/cli#installation${NC}"
             fi
         fi
     fi

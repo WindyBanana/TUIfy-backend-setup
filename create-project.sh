@@ -28,6 +28,7 @@ source "$SCRIPT_DIR/scripts/setup-shadcn.sh"
 source "$SCRIPT_DIR/scripts/setup-ai.sh"
 source "$SCRIPT_DIR/scripts/setup-admin.sh"
 source "$SCRIPT_DIR/scripts/utils.sh"
+source "$SCRIPT_DIR/scripts/resume-setup.sh"
 source "$SCRIPT_DIR/scripts/setup-vercel-env.sh"
 source "$SCRIPT_DIR/scripts/detect-platform.sh"
 source "$SCRIPT_DIR/scripts/interactive-ui.sh"
@@ -121,7 +122,7 @@ echo ""
 setup_platform_tools
 echo ""
 
-# Step 1: Project Name
+# Step 1: Project Name and Location
 echo -e "${CYAN}Step 1: Project Configuration${NC}"
 read -p "Enter project name (lowercase, hyphens only): " PROJECT_NAME
 
@@ -131,10 +132,59 @@ if [[ ! $PROJECT_NAME =~ ^[a-z0-9-]+$ ]]; then
     exit 1
 fi
 
+# Determine project creation directory
+PARENT_DIR="$(cd .. && pwd)"
+CURRENT_DIR="$(pwd)"
+LAUNCHIFY_DIR_NAME="$(basename "$CURRENT_DIR")"
+
+echo ""
+echo -e "${YELLOW}📁 Project Location:${NC}"
+echo -e "   By default, your project will be created in the parent directory:"
+echo -e "   ${CYAN}$PARENT_DIR/$PROJECT_NAME${NC}"
+echo ""
+echo -e "   This keeps it separate from the Launchify template folder."
+echo ""
+read -p "Create project in parent directory? [Y/n]: " USE_PARENT
+USE_PARENT=${USE_PARENT:-Y}
+
+if [[ $USE_PARENT =~ ^[Yy]$ ]]; then
+    PROJECT_DIR="$PARENT_DIR/$PROJECT_NAME"
+    cd "$PARENT_DIR" || exit 1
+    echo -e "${GREEN}✓ Project will be created at: $PROJECT_DIR${NC}"
+else
+    PROJECT_DIR="$CURRENT_DIR/$PROJECT_NAME"
+    echo -e "${GREEN}✓ Project will be created at: $PROJECT_DIR${NC}"
+    echo -e "${YELLOW}⚠️  Note: Project will be created inside the Launchify directory${NC}"
+fi
+echo ""
+
 # Check if directory already exists
+RESUMING=false
 if [ -d "$PROJECT_NAME" ]; then
-    echo -e "${RED}❌ Directory '$PROJECT_NAME' already exists!${NC}"
-    exit 1
+    # Project exists - detect what's configured
+    detect_configured_services "$PROJECT_NAME"
+
+    # Ask user what to do
+    if ask_resume_action; then
+        # User chose to resume
+        RESUMING=true
+        cd "$PROJECT_NAME" || exit 1
+        echo -e "${GREEN}✓ Resuming setup for '$PROJECT_NAME'${NC}\n"
+    else
+        # User chose to start fresh - project was deleted
+        RESUMING=false
+    fi
+else
+    # Initialize detection flags for new project
+    HAS_VERCEL=false
+    HAS_CONVEX=false
+    HAS_CLERK=false
+    HAS_AXIOM=false
+    HAS_SHADCN=false
+    HAS_AI=false
+    HAS_ADMIN=false
+    HAS_ENV=false
+    HAS_GUIDE=false
 fi
 
 echo -e "${GREEN}✓ Project name: $PROJECT_NAME${NC}\n"
@@ -316,35 +366,46 @@ install_missing_clis "$USE_VERCEL" "$USE_CONVEX" "$USE_AXIOM"
 echo ""
 
 # Step 7: Create Project
-echo -e "${CYAN}🚀 Step 7: Creating Project${NC}"
-create_project "$PROJECT_NAME" "$FRAMEWORK" "$PACKAGE_MANAGER"
-echo ""
+if ! $RESUMING; then
+    echo -e "${CYAN}🚀 Step 7: Creating Project${NC}"
+    create_project "$PROJECT_NAME" "$FRAMEWORK" "$PACKAGE_MANAGER"
+    echo ""
+    cd "$PROJECT_NAME"
+else
+    echo -e "${CYAN}Step 7: Project Creation${NC}"
+    echo -e "${BLUE}⏭️  Skipping - project already exists${NC}"
+    echo ""
+fi
 
 # Step 8: Setup Services
-cd "$PROJECT_NAME"
 
-if $USE_VERCEL; then
+if should_setup_service "Vercel" "$USE_VERCEL" "$HAS_VERCEL"; then
     echo -e "${CYAN}Setting up Vercel...${NC}"
     setup_vercel "$PROJECT_NAME"
     echo ""
 fi
 
-if $USE_CONVEX; then
+if should_setup_service "Convex" "$USE_CONVEX" "$HAS_CONVEX"; then
     echo -e "${CYAN}Setting up Convex...${NC}"
     setup_convex "$PROJECT_NAME" "$PACKAGE_MANAGER"
     echo ""
 fi
 
-if $USE_AXIOM; then
+if should_setup_service "Axiom" "$USE_AXIOM" "$HAS_AXIOM"; then
     echo -e "${CYAN}Setting up Axiom Observability...${NC}"
     echo -e "${BLUE}After setup, you'll need to run: ${GREEN}axiom auth login${NC}"
     echo -e "${BLUE}and create an API token${NC}"
     echo ""
-    setup_axiom "$PROJECT_NAME"
+    if setup_axiom "$PROJECT_NAME"; then
+        echo -e "${GREEN}✓ Axiom setup completed${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Axiom setup incomplete - manual configuration needed${NC}"
+        echo -e "${CYAN}See SETUP_GUIDE.md for manual setup instructions${NC}"
+    fi
     echo ""
 fi
 
-if $USE_CLERK; then
+if should_setup_service "Clerk" "$USE_CLERK" "$HAS_CLERK"; then
     echo -e "${CYAN}Setting up Clerk Authentication...${NC}"
     echo -e "${BLUE}This will set up webhooks and configure Clerk automatically${NC}"
     echo -e "${BLUE}You'll need your Clerk API keys from: ${CYAN}https://dashboard.clerk.com${NC}"
@@ -362,13 +423,13 @@ if $USE_CLERK; then
 fi
 
 # Step 9: Setup UI & Features
-if $USE_SHADCN; then
+if should_setup_service "shadcn/ui" "$USE_SHADCN" "$HAS_SHADCN"; then
     echo -e "${CYAN}Setting up shadcn/ui...${NC}"
     setup_shadcn "$PACKAGE_MANAGER"
     echo ""
 fi
 
-if $USE_AI; then
+if should_setup_service "AI Integration" "$USE_AI" "$HAS_AI"; then
     echo -e "${CYAN}Setting up AI Integration...${NC}"
     if [ "$AI_PROVIDER" = "openai" ]; then
         echo -e "${BLUE}Get your API key from: ${CYAN}https://platform.openai.com/api-keys${NC}"
@@ -384,38 +445,50 @@ if $USE_AI; then
     echo ""
 fi
 
-if $USE_ADMIN; then
+if should_setup_service "Admin Panel" "$USE_ADMIN" "$HAS_ADMIN"; then
     echo -e "${CYAN}Setting up Admin Panel...${NC}"
     setup_admin_panel "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$ADMIN_PROD_ENABLED"
     echo ""
 fi
 
 # Step 10: Generate Environment Files
-echo -e "${CYAN}Step 10: Generating Environment Files${NC}"
-echo -e "${YELLOW}Security Reminder:${NC}"
-echo -e "   • .env.local contains your secrets - ${GREEN}stored locally only${NC}"
-echo -e "   • ${RED}Never commit .env files to Git${NC}"
-echo -e "   • Production secrets set separately in Vercel dashboard"
-echo ""
-generate_env_files "$USE_VERCEL" "$USE_CONVEX" "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$USE_AI" "$AI_PROVIDER"
-echo ""
-echo -e "${GREEN}✓ Environment files created${NC}"
-echo -e "${BLUE}.env.local is already in .gitignore - safe from Git${NC}"
-echo ""
-
-# Step 11: Create Setup Guides
-echo -e "${CYAN}Step 11: Creating Setup Guides${NC}"
-
-# Always copy Vercel environment setup guide
-cp "$SCRIPT_DIR/guides/VERCEL_ENVIRONMENT_SETUP.md" .
-echo -e "${GREEN}✓ VERCEL_ENVIRONMENT_SETUP.md created${NC}"
-
-# Create service-specific guides if needed
-if $USE_CLERK || $USE_LINEAR; then
-    create_setup_guides "$USE_CLERK" "$USE_LINEAR"
+if ! $HAS_ENV || $RESUMING; then
+    echo -e "${CYAN}Step 10: Generating Environment Files${NC}"
+    echo -e "${YELLOW}Security Reminder:${NC}"
+    echo -e "   • .env.local contains your secrets - ${GREEN}stored locally only${NC}"
+    echo -e "   • ${RED}Never commit .env files to Git${NC}"
+    echo -e "   • Production secrets set separately in Vercel dashboard"
+    echo ""
+    generate_env_files "$USE_VERCEL" "$USE_CONVEX" "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$USE_AI" "$AI_PROVIDER"
+    echo ""
+    echo -e "${GREEN}✓ Environment files created${NC}"
+    echo -e "${BLUE}.env.local is already in .gitignore - safe from Git${NC}"
+    echo ""
+else
+    echo -e "${CYAN}Step 10: Environment Files${NC}"
+    echo -e "${BLUE}⏭️  .env.local already exists${NC}"
+    echo ""
 fi
 
-echo ""
+# Step 11: Create Setup Guides
+if ! $HAS_GUIDE || $RESUMING; then
+    echo -e "${CYAN}Step 11: Creating Setup Guides${NC}"
+
+    # Always copy Vercel environment setup guide
+    cp "$SCRIPT_DIR/guides/VERCEL_ENVIRONMENT_SETUP.md" .
+    echo -e "${GREEN}✓ VERCEL_ENVIRONMENT_SETUP.md created${NC}"
+
+    # Create service-specific guides if needed
+    if $USE_CLERK || $USE_LINEAR; then
+        create_setup_guides "$USE_CLERK" "$USE_LINEAR"
+    fi
+
+    echo ""
+else
+    echo -e "${CYAN}Step 11: Setup Guides${NC}"
+    echo -e "${BLUE}⏭️  Setup guides already exist${NC}"
+    echo ""
+fi
 
 # Step 12: Validate Build
 echo -e "${CYAN}Step 12: Validating Project Build${NC}"
@@ -521,23 +594,47 @@ echo -e "${GREEN}║          🚀 PROJECT SETUP COMPLETE! 🚀               �
 echo -e "${GREEN}║                                                       ║${NC}"
 echo -e "${GREEN}╚═══════════════════════════════════════════════════════╝${NC}\n"
 
-echo -e "${CYAN}Project created at: ${GREEN}./$PROJECT_NAME${NC}\n"
+echo -e "${CYAN}Project created at: ${GREEN}$PROJECT_DIR${NC}\n"
 
 # Show detailed manual setup summary
 CLERK_AUTOMATED=${CLERK_AUTOMATED:-false}
 show_manual_setup_summary "$USE_CLERK" "$USE_AXIOM" "$USE_LINEAR" "$USE_AI" "$AI_PROVIDER" "$CLERK_AUTOMATED"
 
-echo -e "${YELLOW}Next steps:${NC}"
-echo -e "  1. ${CYAN}cd $PROJECT_NAME${NC}"
-echo -e "  2. ${CYAN}Review the manual setup instructions above${NC}"
-echo -e "  3. ${CYAN}Update .env.local with required API keys${NC}"
-echo -e "  4. ${CYAN}$PACKAGE_MANAGER run dev${NC} - Start development server"
+echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${YELLOW}GETTING STARTED - RUNNING YOUR PROJECT${NC}"
+echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
+
+echo -e "${CYAN}1. Navigate to your project:${NC}"
+echo -e "   ${GREEN}cd $PROJECT_DIR${NC}\n"
+
+echo -e "${CYAN}2. Review and update environment variables:${NC}"
+echo -e "   ${GREEN}# Edit .env.local and add your API keys${NC}"
+echo -e "   ${GREEN}# See the manual setup instructions above for details${NC}\n"
+
+if $USE_CONVEX; then
+    echo -e "${CYAN}3. Start your development servers:${NC}"
+    echo -e "   ${GREEN}# Terminal 1 - Start Convex${NC}"
+    echo -e "   ${GREEN}npx convex dev${NC}\n"
+    echo -e "   ${GREEN}# Terminal 2 - Start Next.js${NC}"
+    echo -e "   ${GREEN}$PACKAGE_MANAGER run dev${NC}\n"
+    echo -e "   ${BLUE}Your app will be running at: ${CYAN}http://localhost:3000${NC}\n"
+else
+    echo -e "${CYAN}3. Start your development server:${NC}"
+    echo -e "   ${GREEN}$PACKAGE_MANAGER run dev${NC}\n"
+    echo -e "   ${BLUE}Your app will be running at: ${CYAN}http://localhost:3000${NC}\n"
+fi
+
+if $USE_ADMIN; then
+    echo -e "${CYAN}4. Access the admin panel:${NC}"
+    echo -e "   ${GREEN}http://localhost:3000/admin${NC}\n"
+fi
 
 # Only show git push instructions if user didn't already push
 if [[ ! $SETUP_GITHUB =~ ^[Yy]$ ]]; then
-    echo -e "  5. ${CYAN}git remote add origin <your-repo-url>${NC}"
-    echo -e "  6. ${CYAN}git push -u origin main${NC}"
+    echo -e "${CYAN}5. Push to GitHub (when ready):${NC}"
+    echo -e "   ${GREEN}git remote add origin <your-repo-url>${NC}"
+    echo -e "   ${GREEN}git push -u origin main${NC}\n"
 fi
 
-echo ""
+echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
 echo -e "${GREEN}✨ Happy coding!${NC}\n"

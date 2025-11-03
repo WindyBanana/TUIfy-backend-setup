@@ -172,7 +172,7 @@ Step 5: Checking Dependencies...
 ✓ Vercel CLI 33.0.1
 ✓ All critical dependencies satisfied
 
-🚀 Creating Project...
+Creating Project...
 ✓ Next.js project created
 
 Setting up Vercel...
@@ -275,7 +275,7 @@ my-saas-app/
   - Supports encrypted, plain, and sensitive variable types
   - Targets production, preview, and development environments
   - Graceful fallback to manual instructions if API unavailable
-- 🌍 **Environments**:
+- **Environments**:
   - Development: Preview deployments (all branches)
   - Production: Main branch deployments
 
@@ -284,8 +284,8 @@ my-saas-app/
 - ✅ Development deployment initialization (via `npx convex`)
 - ✅ Schema and example files
 - ✅ Auto-populated `.env.local`
-- 💡 **Note**: No global CLI installation needed - uses `npx convex` commands
-- 🌍 **Environments**:
+- **Note**: No global CLI installation needed - uses `npx convex` commands
+- **Environments**:
   - Development: Auto-created dev deployment
   - Production: Manual deployment (`npx convex deploy --prod`)
 
@@ -300,18 +300,18 @@ my-saas-app/
 ### Guided Manual Setup
 
 #### Clerk
-- 📋 Detailed setup guide in `SETUP_GUIDE.md`
-- 📋 Dashboard links and instructions
-- 📋 Webhook configuration guide
-- 📋 Separate dev and production instances
-- 🔑 **Required**: Manual API key entry in `.env.local`
+- Detailed setup guide in `SETUP_GUIDE.md`
+- Dashboard links and instructions
+- Webhook configuration guide
+- Separate dev and production instances
+- **Required**: Manual API key entry in `.env.local`
 
 #### Linear
-- 📋 GraphQL API setup guide
-- 📋 API key generation instructions
-- 📋 Example queries and mutations
-- 📋 Webhook setup (optional)
-- 🔑 **Required**: Manual API key entry in `.env.local`
+- GraphQL API setup guide
+- API key generation instructions
+- Example queries and mutations
+- Webhook setup (optional)
+- **Required**: Manual API key entry in `.env.local`
 
 ### UI & Feature Enhancements
 
@@ -321,9 +321,9 @@ my-saas-app/
 - ✅ Dark mode with theme toggle component
 - ✅ Tailwind CSS theme configured
 - ✅ `components.json` auto-generated
-- 📦 **Installed**: `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react`, `next-themes`
-- 🎨 **Ready to use**: `ThemeToggle` component and `ThemeProvider`
-- 📚 **Add more**: `npx shadcn@latest add <component>`
+- **Installed**: `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react`, `next-themes`
+- **Ready to use**: `ThemeToggle` component and `ThemeProvider`
+- **Add more**: `npx shadcn@latest add <component>`
 
 #### AI Integration
 Supports OpenAI, Anthropic (Claude), or both providers.
@@ -337,7 +337,7 @@ Supports OpenAI, Anthropic (Claude), or both providers.
 - ✅ Example API route: `app/api/ai/chat/route.ts`
 - ✅ Example React component: `components/examples/ai-chat-example.tsx`
 - ✅ Support for streaming responses
-- 🔑 **API keys**: Auto-added to `.env.local` with helpful comments
+- **API keys**: Auto-added to `.env.local` with helpful comments
 
 **Usage:**
 ```typescript
@@ -366,8 +366,8 @@ for await (const chunk of streamText('Your prompt', options)) {
 - ✅ Settings configuration
 - ✅ Responsive sidebar navigation
 - ✅ Dark mode support (if shadcn/ui enabled)
-- 🔒 **Security**: Dev-only by default, optional production enable
-- 📍 **Access**: `http://localhost:3000/admin`
+- **Security**: Dev-only by default, optional production enable
+- **Access**: `http://localhost:3000/admin`
 
 **Files created:**
 - `app/admin/layout.tsx` - Admin layout with sidebar
