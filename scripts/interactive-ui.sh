@@ -141,7 +141,7 @@ show_config_summary_ui() {
 
     summary+="PROJECT: $PROJECT_NAME\n"
     summary+="PACKAGE MANAGER: $PACKAGE_MANAGER\n"
-    summary+="FRAMEWORK: Next.js 15\n\n"
+    summary+="FRAMEWORK: Next.js 16\n\n"
 
     summary+="SERVICES:\n"
     $USE_VERCEL && summary+="  ✓ Vercel\n" || summary+="  ✗ Vercel\n"

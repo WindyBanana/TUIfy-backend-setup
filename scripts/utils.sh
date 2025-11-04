@@ -427,9 +427,9 @@ EOF
 
     if $use_linear; then
         cat >> SETUP_GUIDE.md << EOF
-## 📊 Linear (Issue/Project Tracking)
+## Linear (Issue/Project Tracking)
 
-Linear is an issue tracking and project management tool (like Jira). Here's how to integrate it via GraphQL API:
+Linear is a modern issue tracker and task management tool (like Jira, but faster). Use it for bug tracking, feature requests, user feedback, and sprint planning. Here's how to integrate it via GraphQL API:
 
 ### Get API Access
 

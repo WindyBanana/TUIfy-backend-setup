@@ -117,7 +117,7 @@ add_convex_scripts() {
 
         echo -e "${GREEN}✓ Added Convex scripts to package.json${NC}"
     else
-        echo -e "${YELLOW}ℹ️  Manually add these scripts to package.json:${NC}"
+        echo -e "${YELLOW}Manually add these scripts to package.json:${NC}"
         echo -e '    "convex:dev": "convex dev"'
         echo -e '    "convex:deploy": "convex deploy --prod"'
     fi

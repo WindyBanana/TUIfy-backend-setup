@@ -63,7 +63,7 @@ When setup starts, a hidden directory `.launchify-state/` is created:
 ./create-project.sh
 
 ╔════════════════════════════════════════════════════╗
-║   🔄 RESUME DETECTED                               ║
+║   RESUME DETECTED                                  ║
 ╚════════════════════════════════════════════════════╝
 
 Previous setup detected:
@@ -344,7 +344,7 @@ State is automatically cleaned up on successful completion:
 ✓ State tracking cleaned up
 
 ╔═══════════════════════════════════════════════════╗
-║          🎉 PROJECT SETUP COMPLETE! 🎉           ║
+║          PROJECT SETUP COMPLETE!                  ║
 ╚═══════════════════════════════════════════════════╝
 ```
 

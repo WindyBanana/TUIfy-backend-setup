@@ -21,11 +21,11 @@ STEP_NAMES[6]="Setting up shadcn/ui"
 STEP_NAMES[7]="Setting up AI Integration"
 STEP_NAMES[8]="Setting up Admin Panel"
 STEP_NAMES[9]="Setting up Feature Toggles"
-STEP_NAMES[10]="Setting up GitHub CI/CD"
-STEP_NAMES[11]="Generating Environment Files"
-STEP_NAMES[12]="Creating Setup Guides"
-STEP_NAMES[13]="Validating Build"
-STEP_NAMES[14]="Initializing Git"
+STEP_NAMES[10]="Initializing Git Repository"
+STEP_NAMES[11]="Setting up GitHub CI/CD"
+STEP_NAMES[12]="Generating Environment Files"
+STEP_NAMES[13]="Creating Setup Guides"
+STEP_NAMES[14]="Validating Build"
 
 # Initialize progress tracking
 init_progress() {
@@ -83,7 +83,7 @@ show_progress() {
     if [ -n "$eta" ]; then
         echo -e "${YELLOW}Estimated time remaining: ${eta}${NC}"
     fi
-    echo -e "${GREEN}💾 Progress automatically saved (Ctrl+C safe)${NC}"
+    echo -e "${GREEN}✓ Progress automatically saved • Safe to Ctrl+C • Run script again to resume${NC}"
     echo -e "${CYAN}═══════════════════════════════════════════════════════════${NC}"
     echo ""
 }

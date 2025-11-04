@@ -270,7 +270,7 @@ git reset HEAD <file-with-secrets>
 - Never expose in client-side code
 - Monitor usage in provider dashboards
 
-### Linear (Project Management)
+### Linear (Issue Tracking & User Feedback)
 
 **Keys:**
 - `LINEAR_API_KEY` - Secret, GraphQL access

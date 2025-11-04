@@ -110,7 +110,7 @@ setup_clerk() {
             WEBHOOK_HEADERS="{}"
             if $use_convex && $use_vercel; then
                 echo ""
-                echo -e "${YELLOW}📝 Convex + Vercel Integration Detected${NC}"
+                echo -e "${YELLOW}Convex + Vercel Integration Detected${NC}"
                 echo "Generating bypass token for Clerk → Convex webhooks..."
 
                 # Generate a secure random token

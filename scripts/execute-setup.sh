@@ -182,8 +182,8 @@ execute_feature_toggles_setup() {
 
 # Execute GitHub CI/CD setup
 execute_github_setup() {
-    should_skip_step 10 && return 0
-    show_progress 10
+    should_skip_step 11 && return 0
+    show_progress 11
     start_step_timer
     
     if $USE_GITHUB && ! $HAS_GITHUB; then
@@ -208,14 +208,14 @@ execute_github_setup() {
         echo ""
     fi
     
-    end_step_timer 10
-    mark_step_completed 10
+    end_step_timer 11
+    mark_step_completed 11
 }
 
 # Generate environment files
 execute_generate_env_files() {
-    should_skip_step 11 && return 0
-    show_progress 11
+    should_skip_step 12 && return 0
+    show_progress 12
     start_step_timer
     
     if ! $HAS_ENV || $RESUMING; then
@@ -236,14 +236,14 @@ execute_generate_env_files() {
         echo ""
     fi
     
-    end_step_timer 11
-    mark_step_completed 11
+    end_step_timer 12
+    mark_step_completed 12
 }
 
 # Create setup guides
 execute_create_guides() {
-    should_skip_step 12 && return 0
-    show_progress 12
+    should_skip_step 13 && return 0
+    show_progress 13
     start_step_timer
     
     if ! $HAS_GUIDE || $RESUMING; then
@@ -265,14 +265,14 @@ execute_create_guides() {
         echo ""
     fi
     
-    end_step_timer 12
-    mark_step_completed 12
+    end_step_timer 13
+    mark_step_completed 13
 }
 
 # Validate project build
 execute_validate_build() {
-    should_skip_step 13 && return 0
-    show_progress 13
+    should_skip_step 14 && return 0
+    show_progress 14
     start_step_timer
     
     echo -e "${CYAN}Validating Project Build${NC}"
@@ -324,14 +324,14 @@ execute_validate_build() {
         echo -e "${YELLOW}⚠️  Please fix build errors before deploying${NC}\n"
     fi
     
-    end_step_timer 13
-    mark_step_completed 13
+    end_step_timer 14
+    mark_step_completed 14
 }
 
 # Initialize Git repository
 execute_git_init() {
-    should_skip_step 14 && return 0
-    show_progress 14
+    should_skip_step 10 && return 0
+    show_progress 10
     start_step_timer
     
     echo -e "${CYAN}Initializing Git Repository${NC}"
@@ -340,8 +340,8 @@ execute_git_init() {
     git commit -m "Initial commit: $PROJECT_NAME - Launchify template with automated setup"
     echo -e "${GREEN}✓ Git repository initialized${NC}\n"
     
-    end_step_timer 14
-    mark_step_completed 14
+    end_step_timer 10
+    mark_step_completed 10
 }
 
 # Main execution function
@@ -371,11 +371,11 @@ execute_all_setup() {
     execute_ai_setup
     execute_admin_setup
     execute_feature_toggles_setup
-    execute_github_setup
+    execute_git_init              # Must run before GitHub setup
+    execute_github_setup          # Needs git repo to push
     execute_generate_env_files
     execute_create_guides
     execute_validate_build
-    execute_git_init
     
     return 0
 }

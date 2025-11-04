@@ -18,9 +18,10 @@ show_preset_menu() {
     echo "   ✓ shadcn/ui + Admin Panel + Feature Toggles"
     echo "   ✓ GitHub CI/CD"
     echo ""
-    echo -e "${GREEN}2. Blog/Content Site${NC} - Lightweight content-focused site"
-    echo "   ✓ Vercel + shadcn/ui + GitHub"
-    echo "   ✗ No backend/auth (keep it simple)"
+    echo -e "${GREEN}2. Modern Frontend${NC} - Beautiful, fast, deployable"
+    echo "   ✓ Next.js 16 + Tailwind + shadcn/ui"
+    echo "   ✓ Vercel + GitHub CI/CD"
+    echo "   ✗ No backend/auth (pure frontend)"
     echo ""
     echo -e "${GREEN}3. AI Application${NC} - AI-powered app"
     echo "   ✓ Vercel + Convex + Clerk + Axiom"
@@ -42,7 +43,7 @@ show_preset_menu() {
             return 0
             ;;
         2)
-            load_preset "blog-content"
+            load_preset "modern-frontend"
             return 0
             ;;
         3)

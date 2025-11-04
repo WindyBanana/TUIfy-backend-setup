@@ -4,7 +4,7 @@ This guide explains how to properly configure environment variables across Verce
 
 ---
 
-## 📊 Vercel's Three Environments
+## Vercel's Three Environments
 
 Vercel has **three separate environments** for your variables:
 
@@ -16,7 +16,7 @@ Vercel has **three separate environments** for your variables:
 
 ---
 
-## 🎯 Environment Variable Strategy
+## Environment Variable Strategy
 
 ### Which Variables Go Where?
 
@@ -74,7 +74,7 @@ For each variable, you'll see checkboxes:
 
 ---
 
-## 📝 Complete Variable Configuration
+## Complete Variable Configuration
 
 ### Clerk (Authentication)
 
@@ -274,7 +274,7 @@ Before deploying to production, verify:
 
 ---
 
-## 📚 Resources
+## Resources
 
 - **Vercel Docs:** https://vercel.com/docs/concepts/projects/environment-variables
 - **Convex Deployments:** https://docs.convex.dev/production/hosting/deploy

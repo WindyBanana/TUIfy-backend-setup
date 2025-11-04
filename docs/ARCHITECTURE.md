@@ -1,8 +1,16 @@
-# Launchify Gather-Then-Execute Implementation Summary
+# Launchify Architecture
 
 ## Overview
 
-Successfully implemented the comprehensive refactor of Launchify as specified in the requirements document. The project now follows a two-phase "gather-then-execute" architecture with enhanced UX, new features, and improved reliability.
+Launchify follows a **two-phase "gather-then-execute" architecture** designed for reliability, user experience, and automated service integration. This document explains the technical design and implementation details.
+
+### Key Design Principles
+
+1. **Gather-Then-Execute**: Separate interactive input collection from automated execution
+2. **Checkpoint/Resume**: Save progress at every step, resume from failures
+3. **Zero-Config Automation**: Automate service setup wherever possible
+4. **Graceful Degradation**: Fall back to manual instructions when automation isn't possible
+5. **User-Friendly Errors**: Provide clear recovery options and troubleshooting steps
 
 ## ✅ Completed Features
 
@@ -170,7 +178,7 @@ Before deploying to users, test:
    - Verify prod keys go to Vercel (if token provided)
    - Check `.env.production.template` generation
 
-## 🎯 Implementation Status
+## Implementation Status
 
 All 11 planned todos completed:
 
@@ -186,7 +194,7 @@ All 11 planned todos completed:
 - ✅ Post-action verification
 - ✅ Prod/dev environment separation
 
-## 📝 Notes
+## Notes
 
 - **Backward Compatibility**: Existing setup scripts (`setup-clerk.sh`, `setup-convex.sh`, etc.) remain unchanged in their core functionality
 - **Global Variables**: All new modules use the same global variable naming convention as the original script
@@ -210,7 +218,7 @@ All 11 planned todos completed:
 ./create-project.sh --help
 ```
 
-## 🔄 Architecture Flow
+## Architecture Flow
 
 ```
 START
@@ -249,7 +257,7 @@ START
 END
 ```
 
-## ✨ Key Improvements
+## Key Improvements
 
 1. **No Mid-Setup Prompts**: All interactions happen upfront
 2. **Validation Upfront**: API keys validated before any setup begins

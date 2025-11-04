@@ -101,7 +101,7 @@ gather_package_manager() {
 gather_framework() {
     echo -e "${CYAN}Step 3: Framework${NC}"
     echo "Select your framework:"
-    echo "  1) Next.js 15 + TypeScript + Tailwind (recommended)"
+    echo "  1) Next.js 16 + TypeScript + Tailwind (recommended)"
     echo "  2) Plain React + TypeScript (coming soon)"
     echo "  3) Node.js Express API (coming soon)"
     read -p "Choice [1-3] (default: 1): " FRAMEWORK_CHOICE

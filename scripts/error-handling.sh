@@ -54,7 +54,7 @@ load_state() {
         echo -e "  Last completed step: ${GREEN}$current_step of 14${NC}"
         echo -e "  Time: $(date -d @$TIMESTAMP '+%Y-%m-%d %H:%M:%S' 2>/dev/null || date -r $TIMESTAMP '+%Y-%m-%d %H:%M:%S' 2>/dev/null || echo 'Unknown')"
         echo ""
-        echo -e "${BLUE}💡 You can continue from where you left off!${NC}"
+        echo -e "${GREEN}✓ You can continue from where you left off!${NC}"
         echo ""
 
         read -p "Resume from step $((current_step + 1))? [Y/n]: " resume_choice
@@ -135,10 +135,10 @@ offer_recovery_options() {
     echo -e "  3) ${CYAN}Manual${NC} - I'll fix it manually, mark as done"
     echo -e "  4) ${RED}Abort${NC} - Stop here, I'll fix it later"
     echo ""
-    echo -e "${BLUE}💡 If you choose Abort:${NC}"
+    echo -e "${BLUE}If you choose Abort:${NC}"
     echo -e "   • Your progress is saved automatically"
-    echo -e "   • Just run ./create-project.sh again to resume from this step"
-    echo -e "   • Check the log file at ~/.launchify/logs/ for details"
+    echo -e "   • Run: ${GREEN}./create-project.sh${NC} again to resume from this step"
+    echo -e "   • Check the log file at: ${CYAN}~/.launchify/logs/${NC} for details"
     echo ""
     
     read -p "Choose option [1-4]: " recovery_choice
@@ -230,7 +230,7 @@ handle_service_error() {
 
     if [[ $skip_service =~ ^[Yy]$ ]]; then
         echo -e "${YELLOW}⚠️  Continuing without $service${NC}"
-        echo -e "${BLUE}ℹ️  See SETUP_GUIDE.md for manual setup instructions${NC}"
+        echo -e "${BLUE}See SETUP_GUIDE.md for manual setup instructions${NC}"
         return 0
     else
         return 1

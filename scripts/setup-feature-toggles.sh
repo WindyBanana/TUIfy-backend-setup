@@ -41,7 +41,7 @@ EOF
 ' convex/schema.ts
         echo -e "${GREEN}✓ Added featureFlags table to schema${NC}"
     else
-        echo -e "${BLUE}ℹ️  featureFlags table already in schema${NC}"
+        echo -e "${BLUE}featureFlags table already in schema${NC}"
     fi
 
 

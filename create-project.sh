@@ -17,6 +17,31 @@ NC='\033[0m' # No Color
 # Get the directory where this script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# Trap handler for Ctrl+C
+trap_exit() {
+    echo ""
+    echo ""
+    echo -e "${YELLOW}═══════════════════════════════════════════════════════════${NC}"
+    echo -e "${YELLOW}Setup Interrupted${NC}"
+    echo -e "${YELLOW}═══════════════════════════════════════════════════════════${NC}"
+    echo ""
+    echo -e "${GREEN}✓ Your progress has been saved automatically${NC}"
+    echo ""
+    echo -e "${CYAN}To resume from where you left off:${NC}"
+    echo -e "  ${GREEN}./create-project.sh${NC}"
+    echo ""
+    echo -e "${CYAN}To start completely fresh:${NC}"
+    echo -e "  rm -rf .launchify-state/"
+    echo -e "  ${GREEN}./create-project.sh${NC}"
+    echo ""
+    echo -e "${CYAN}To view logs:${NC}"
+    echo -e "  ls ~/.launchify/logs/"
+    echo ""
+    exit 130
+}
+
+trap trap_exit INT
+
 # Parse command-line arguments
 DRY_RUN_MODE=false
 for arg in "$@"; do
@@ -103,16 +128,16 @@ echo "  • You can decline any installation - the script adapts accordingly"
 echo ""
 echo -e "${YELLOW}Important Notes:${NC}"
 echo ""
-echo "• This tool is designed for developers familiar with the stack"
-echo "• Generated code should be reviewed before production deployment"
-echo "• You are responsible for API costs, security, and compliance"
-echo "• This software is provided as-is (see LICENSE for details)"
+echo "• Designed for developers building with Next.js and modern tools"
+echo "• Review generated code and configurations before deploying to production"
+echo "• You're responsible for managing API costs, security, and compliance"
+echo "• Open source software provided under MIT License (see LICENSE)"
 echo ""
-echo -e "${CYAN}✨ Built-in Safety Features:${NC}"
+echo -e "${CYAN}Built-in Safety Features:${NC}"
 echo "• Setup progress is automatically saved at each step"
-echo "• If anything fails, you can resume from where you left off"
+echo "• If anything fails or you press Ctrl+C, you can resume"
 echo "• Full logs saved to ~/.launchify/logs/ for troubleshooting"
-echo "• Just run the script again to continue"
+echo "• Just run: ${GREEN}./create-project.sh${NC} again to continue"
 echo ""
 echo -e "${CYAN}By continuing, you acknowledge that you understand what this${NC}"
 echo -e "${CYAN}tool does and will review generated configurations appropriately.${NC}"

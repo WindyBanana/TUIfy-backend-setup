@@ -57,7 +57,7 @@ perform_dry_run() {
     fi
 
     if $USE_CONVEX; then
-        echo -e "  ${CYAN}ℹ️  Convex - Login handled during setup (browser-based)${NC}"
+        echo -e "  ${CYAN}Convex - Login handled during setup (browser-based)${NC}"
     fi
 
     if $USE_AXIOM; then
