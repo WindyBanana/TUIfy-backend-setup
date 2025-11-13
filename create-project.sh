@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Launchify - Project Template Generator
+# TUIfy - Project Template Generator
 # Transform your idea into a production-ready project with automated service setup
 
 # Note: We don't use 'set -e' because we handle errors through the checkpoint system
@@ -31,11 +31,11 @@ trap_exit() {
     echo -e "  ${GREEN}./create-project.sh${NC}"
     echo ""
     echo -e "${CYAN}To start completely fresh:${NC}"
-    echo -e "  rm -rf .launchify-state/"
+    echo -e "  rm -rf .tuify-state/"
     echo -e "  ${GREEN}./create-project.sh${NC}"
     echo ""
     echo -e "${CYAN}To view logs:${NC}"
-    echo -e "  ls ~/.launchify/logs/"
+    echo -e "  ls ~/.tuify/logs/"
     echo ""
     exit 130
 }
@@ -51,7 +51,7 @@ for arg in "$@"; do
             shift
             ;;
         --help|-h)
-            echo "Launchify - Project Template Generator"
+            echo "TUIfy - Project Template Generator"
             echo ""
             echo "Usage: ./create-project.sh [OPTIONS]"
             echo ""
@@ -95,9 +95,9 @@ source "$SCRIPT_DIR/scripts/verify-actions.sh"
 
 # Welcome & Information
 echo ""
-echo -e "${CYAN}WELCOME TO LAUNCHIFY${NC}"
+echo -e "${CYAN}WELCOME TO TUIFY${NC}"
 echo ""
-echo -e "${GREEN}Launchify accelerates your development workflow by automating${NC}"
+echo -e "${GREEN}TUIfy accelerates your development workflow by automating${NC}"
 echo -e "${GREEN}the setup of modern web applications with production-ready tools.${NC}"
 echo ""
 echo -e "${CYAN}Perfect for developers who:${NC}"
@@ -136,7 +136,7 @@ echo ""
 echo -e "${CYAN}Built-in Safety Features:${NC}"
 echo "• Setup progress is automatically saved at each step"
 echo "• If anything fails or you press Ctrl+C, you can resume"
-echo "• Full logs saved to ~/.launchify/logs/ for troubleshooting"
+echo "• Full logs saved to ~/.tuify/logs/ for troubleshooting"
 echo "• Just run: ${GREEN}./create-project.sh${NC} again to continue"
 echo ""
 echo -e "${CYAN}By continuing, you acknowledge that you understand what this${NC}"
@@ -154,21 +154,21 @@ echo ""
 echo -e "${GREEN}✓ Great! Let's build something amazing.${NC}"
 echo ""
 
-# Safety Check: Prevent running inside launchify directory
+# Safety Check: Prevent running inside tuify directory
 if [ -f "$SCRIPT_DIR/create-project.sh" ] && [ -d "$SCRIPT_DIR/scripts" ] && [ -d "$SCRIPT_DIR/templates" ]; then
     CURRENT_DIR=$(basename "$PWD")
     if [ "$PWD" = "$SCRIPT_DIR" ]; then
         echo ""
         echo -e "${RED}⚠️  SAFETY WARNING: Wrong Directory!${NC}"
         echo ""
-        echo -e "${YELLOW}You are running the generator inside the launchify directory itself!${NC}"
+        echo -e "${YELLOW}You are running the generator inside the tuify directory itself!${NC}"
         echo -e "${YELLOW}This will create your project as a subdirectory of the generator.${NC}"
         echo ""
         echo -e "${CYAN}Recommended:${NC}"
         echo -e "  1. ${CYAN}cd ..${NC} (go up one directory)"
-        echo -e "  2. ${CYAN}./launchify/create-project.sh${NC} (run from parent directory)"
+        echo -e "  2. ${CYAN}./tuify/create-project.sh${NC} (run from parent directory)"
         echo ""
-        echo -e "${YELLOW}This way your project will be created alongside launchify, not inside it.${NC}"
+        echo -e "${YELLOW}This way your project will be created alongside tuify, not inside it.${NC}"
         echo ""
         read -p "Continue anyway? [y/N]: " CONTINUE_ANYWAY
         CONTINUE_ANYWAY=${CONTINUE_ANYWAY:-N}

@@ -1,8 +1,8 @@
-# Launchify Architecture
+# TUIfy Architecture
 
 ## Overview
 
-Launchify follows a **two-phase "gather-then-execute" architecture** designed for reliability, user experience, and automated service integration. This document explains the technical design and implementation details.
+TUIfy follows a **two-phase "gather-then-execute" architecture** designed for reliability, user experience, and automated service integration. This document explains the technical design and implementation details.
 
 ### Key Design Principles
 

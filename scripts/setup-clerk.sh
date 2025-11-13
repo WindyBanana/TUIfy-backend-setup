@@ -331,7 +331,7 @@ EOF
 # ============================================
 # CLERK AUTHENTICATION
 # ============================================
-# Automatically configured by Launchify
+# Automatically configured by TUIfy
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${CLERK_PUBLISHABLE_KEY}
 CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
 

@@ -1,6 +1,6 @@
-# Contributing to Launchify
+# Contributing to TUIfy
 
-Thanks for your interest in improving Launchify!
+Thanks for your interest in improving TUIfy!
 
 ## Project Status
 
@@ -24,12 +24,12 @@ This is an **active open source project** built to solve a real problem: automat
    - Clear description of the problem
    - Steps to reproduce (for bugs)
    - Your environment (OS, Node version, etc.)
-   - Error logs if available (`~/.launchify/logs/`)
+   - Error logs if available (`~/.tuify/logs/`)
 
 ### Suggesting Features
 
 We're open to new ideas! Before creating an issue:
-- Consider if it fits Launchify's goal: **automate common setup tasks**
+- Consider if it fits TUIfy's goal: **automate common setup tasks**
 - Check if it could be a separate script/extension
 - Explain the use case and why it would help many users
 
@@ -77,8 +77,8 @@ We're open to new ideas! Before creating an issue:
 
 ```bash
 # Fork and clone
-git clone https://github.com/YOUR_USERNAME/launchify.git
-cd launchify
+git clone https://github.com/YOUR_USERNAME/tuify.git
+cd tuify
 
 # Make executable
 chmod +x create-project.sh
@@ -155,7 +155,7 @@ bash -n scripts/*.sh
 # - Run again and confirm resume works
 
 # 5. Check logs
-cat ~/.launchify/logs/your-project-*.log
+cat ~/.tuify/logs/your-project-*.log
 ```
 
 ## Adding New Services
@@ -192,7 +192,7 @@ By contributing, you agree that your contributions will be licensed under the sa
 
 ---
 
-**Thank you for helping make Launchify better!** 🚀
+**Thank you for helping make TUIfy better!** 🚀
 
 Every contribution; big or small is appreciated.
 

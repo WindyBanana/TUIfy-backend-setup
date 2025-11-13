@@ -38,7 +38,7 @@ Your **production secrets** are set in the Vercel dashboard:
 
 **How they're set:**
 1. **Vercel API** (Automated during setup):
-   - Launchify automatically sets production secrets via Vercel API
+   - TUIfy automatically sets production secrets via Vercel API
    - Secrets encrypted and stored in Vercel's infrastructure
    - Never stored in Git or local files
 
@@ -319,9 +319,9 @@ Project → Settings → Environment Variables
 - Click Save
 ```
 
-**Option 2: Vercel API (Automated by Launchify)**
+**Option 2: Vercel API (Automated by TUIfy)**
 ```bash
-# Launchify automatically sets via API:
+# TUIfy automatically sets via API:
 POST /v10/projects/{projectId}/env?upsert=true
 
 # Sets:

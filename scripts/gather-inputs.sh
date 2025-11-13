@@ -58,7 +58,7 @@ gather_project_location() {
     echo -e "   By default, your project will be created in the parent directory:"
     echo -e "   ${CYAN}$PARENT_DIR/$PROJECT_NAME${NC}"
     echo ""
-    echo -e "   This keeps it separate from the Launchify template folder."
+    echo -e "   This keeps it separate from the TUIfy template folder."
     echo ""
     read -p "Create project in parent directory? [Y/n]: " USE_PARENT
     USE_PARENT=${USE_PARENT:-Y}
@@ -69,7 +69,7 @@ gather_project_location() {
     else
         PROJECT_DIR="$CURRENT_DIR/$PROJECT_NAME"
         echo -e "${GREEN}✓ Project will be created at: $PROJECT_DIR${NC}"
-        echo -e "${YELLOW}⚠️  Note: Project will be created inside the Launchify directory${NC}"
+        echo -e "${YELLOW}⚠️  Note: Project will be created inside the TUIfy directory${NC}"
     fi
     echo ""
 }

@@ -1,6 +1,6 @@
 # Service Integration Guide
 
-Complete guide to all services supported by Launchify.
+Complete guide to all services supported by TUIfy.
 
 ## Service Overview
 
@@ -140,7 +140,7 @@ Automated via Svix API - webhooks are configured automatically for:
 ```bash
 # If token creation fails during setup:
 axiom auth login
-axiom token create launchify-token --datasets="your-project-dev:ingest"
+axiom token create tuify-token --datasets="your-project-dev:ingest"
 # Copy token to .env.local
 ```
 
@@ -356,7 +356,7 @@ gh auth login
 # Choose: Login via web browser (or paste token)
 
 # Then resume setup:
-./launchify/create-project.sh
+./tuify/create-project.sh
 ```
 
 ### Features

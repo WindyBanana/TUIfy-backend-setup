@@ -337,7 +337,7 @@ execute_git_init() {
     echo -e "${CYAN}Initializing Git Repository${NC}"
     git init
     git add .
-    git commit -m "Initial commit: $PROJECT_NAME - Launchify template with automated setup"
+    git commit -m "Initial commit: $PROJECT_NAME - TUIfy template with automated setup"
     echo -e "${GREEN}✓ Git repository initialized${NC}\n"
     
     end_step_timer 10

@@ -77,13 +77,13 @@ Keep your project in the Linux filesystem, NOT Windows:
 ✅ **Good (Fast):**
 ```bash
 cd ~/projects
-./launchify/create-project.sh
+./tuify/create-project.sh
 ```
 
 ❌ **Bad (Slow):**
 ```bash
 cd /mnt/c/Users/YourName/projects  # Windows filesystem
-./launchify/create-project.sh      # Will be slow!
+./tuify/create-project.sh      # Will be slow!
 ```
 
 #### 3. Pre-Authenticate CLIs (Optional - Makes Setup Smoother)
@@ -96,8 +96,8 @@ vercel login
 gh auth login
 axiom auth login
 
-# Then run Launchify:
-./launchify/create-project.sh
+# Then run TUIfy:
+./tuify/create-project.sh
 # All logins will be detected - no browser needed!
 ```
 
@@ -166,7 +166,7 @@ vercel login
 gh auth login
 
 # 2. Resume setup:
-./launchify/create-project.sh
+./tuify/create-project.sh
 # Automatically resumes from where you left off!
 ```
 
@@ -188,15 +188,15 @@ WSL 2 is 5-10x faster when working in Linux filesystem.
 | **WSL 1** | ⚠️ Good | Works well - some OAuth steps may need manual URL copy/paste |
 | **Native Windows** | ⚠️ Limited | Not compatible - please use WSL (see below) |
 
-**Recommendation:** WSL 2 provides the best developer experience with Launchify. The checkpoint/resume system ensures you can complete setup successfully, even if OAuth flows need manual intervention.
+**Recommendation:** WSL 2 provides the best developer experience with TUIfy. The checkpoint/resume system ensures you can complete setup successfully, even if OAuth flows need manual intervention.
 
 ## Windows Users: Using WSL
 
-**For Windows users,** Launchify works great through **Windows Subsystem for Linux (WSL)**. This provides a native Linux environment within Windows.
+**For Windows users,** TUIfy works great through **Windows Subsystem for Linux (WSL)**. This provides a native Linux environment within Windows.
 
 ### Why WSL?
 
-Launchify is built as a Bash script and uses Unix-standard tools. While native Windows (PowerShell/CMD) uses different tools and package managers, WSL provides a Linux environment that's:
+TUIfy is built as a Bash script and uses Unix-standard tools. While native Windows (PowerShell/CMD) uses different tools and package managers, WSL provides a Linux environment that's:
 - ✅ Free and built into Windows 10/11
 - ✅ Fast and lightweight
 - ✅ Fully compatible with Linux developer tools
@@ -214,12 +214,12 @@ wsl --set-default-version 2
 # Launch "Ubuntu" from Start menu
 ```
 
-**Then run Launchify:**
+**Then run TUIfy:**
 ```bash
 # Inside Ubuntu/WSL terminal:
 cd ~
-git clone https://github.com/yourusername/launchify.git
-cd launchify
+git clone https://github.com/yourusername/tuify.git
+cd tuify
 ./create-project.sh
 ```
 

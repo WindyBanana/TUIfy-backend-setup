@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Post-Setup Health Check for Launchify
+# Post-Setup Health Check for TUIfy
 # Verifies that everything is working correctly after setup
 
 # Run comprehensive health check

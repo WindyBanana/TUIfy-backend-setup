@@ -27,7 +27,7 @@ check_homebrew() {
             echo -e "${CYAN}Homebrew Package Manager${NC}"
             echo ""
             echo "Homebrew is the standard package manager for macOS development."
-            echo "Many developer tools (including some Launchify features) rely on it."
+            echo "Many developer tools (including some TUIfy features) rely on it."
             echo ""
             echo -e "${YELLOW}Installation details:${NC}"
             echo "  • Package: Homebrew"
@@ -135,7 +135,7 @@ install_tui_tools() {
     
     echo -e "${CYAN}Enhanced Interactive UI Available${NC}"
     echo ""
-    echo "Launchify offers two interface modes:"
+    echo "TUIfy offers two interface modes:"
     echo ""
     echo -e "${GREEN}1. CLI Mode${NC} - Traditional text prompts (works everywhere)"
     echo -e "${BLUE}2. TUI Mode${NC} - Visual menus with checkboxes (enhanced experience)"
@@ -253,7 +253,7 @@ setup_platform_tools() {
 
     if [[ "$PLATFORM" == "unknown" ]]; then
         echo -e "${RED}✗ Unsupported platform${NC}"
-        echo "Launchify is designed for Linux and macOS."
+        echo "TUIfy is designed for Linux and macOS."
         echo ""
         return 1
     fi

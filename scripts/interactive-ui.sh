@@ -17,7 +17,7 @@ show_feature_selection_ui() {
     local temp_file=$(mktemp)
 
     # SCREEN 1: Core Services Selection
-    $UI_TOOL --title "Launchify - Screen 1: Core Services" \
+    $UI_TOOL --title "TUIfy - Screen 1: Core Services" \
         --checklist "Select backend services to integrate:\n(Space to select, Enter to confirm)" \
         20 78 6 \
         "VERCEL" "Deployment platform with auto-linking" ON \
@@ -73,7 +73,7 @@ show_feature_selection_ui() {
     # Calculate height based on number of options
     local dialog_height=$((12 + option_count))
     
-    $UI_TOOL --title "Launchify - Screen 2: Additional Features" \
+    $UI_TOOL --title "TUIfy - Screen 2: Additional Features" \
         --checklist "Select additional features:\n(Space to select, Enter to confirm)" \
         $dialog_height 78 $option_count \
         "${feature_options[@]}" \
@@ -212,11 +212,11 @@ show_completion_ui() {
     message+="Documentation: See README.md and SETUP_GUIDE.md"
 
     if command -v whiptail &> /dev/null; then
-        whiptail --title "Launchify - Complete!" \
+        whiptail --title "TUIfy - Complete!" \
             --msgbox "$message" \
             20 70
     elif command -v dialog &> /dev/null; then
-        dialog --title "Launchify - Complete!" \
+        dialog --title "TUIfy - Complete!" \
             --msgbox "$message" \
             20 70
         clear

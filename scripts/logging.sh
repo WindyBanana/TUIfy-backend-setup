@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Logging System for Launchify
+# Logging System for TUIfy
 # Captures all output to both terminal and log file
 
 # Log directory setup
-LOG_DIR="$HOME/.launchify/logs"
+LOG_DIR="$HOME/.tuify/logs"
 LOG_FILE=""
 LOGGING_ENABLED=false
 
@@ -27,7 +27,7 @@ init_logging() {
     
     # Write log header
     echo "=========================================="
-    echo "LAUNCHIFY SETUP LOG"
+    echo "TUIFY SETUP LOG"
     echo "=========================================="
     echo "Project: $project_name"
     echo "Date: $(date '+%Y-%m-%d %H:%M:%S')"

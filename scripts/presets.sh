@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Configuration Preset System for Launchify
+# Configuration Preset System for TUIfy
 
 PRESET_DIR="$SCRIPT_DIR/templates/configs"
 
@@ -109,14 +109,14 @@ load_preset() {
 # Save current configuration for future use
 save_config() {
     local config_name=$1
-    local config_dir="$HOME/.launchify/configs"
+    local config_dir="$HOME/.tuify/configs"
     
     mkdir -p "$config_dir"
     
     local config_file="$config_dir/${config_name}.conf"
     
     cat > "$config_file" << EOF
-# Launchify Configuration: ${config_name}
+# TUIfy Configuration: ${config_name}
 # Saved: $(date '+%Y-%m-%d %H:%M:%S')
 
 FRAMEWORK="$FRAMEWORK"
@@ -155,7 +155,7 @@ offer_save_config() {
 
 # List and load saved configurations
 load_saved_config() {
-    local config_dir="$HOME/.launchify/configs"
+    local config_dir="$HOME/.tuify/configs"
     
     if [ ! -d "$config_dir" ] || [ -z "$(ls -A $config_dir 2>/dev/null)" ]; then
         return 1  # No saved configs

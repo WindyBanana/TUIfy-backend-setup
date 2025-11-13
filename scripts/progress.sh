@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Progress Tracking and ETA Calculator for Launchify
+# Progress Tracking and ETA Calculator for TUIfy
 
 # Total number of setup steps
 TOTAL_STEPS=14
 
 # Timing data file
-TIMING_FILE="$HOME/.launchify/timing-stats.json"
+TIMING_FILE="$HOME/.tuify/timing-stats.json"
 CURRENT_RUN_START=0
 STEP_START_TIME=0
 

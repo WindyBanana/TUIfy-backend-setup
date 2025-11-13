@@ -1,10 +1,10 @@
-# Launchify
+# TUIfy
 
 **Production-ready Next.js projects in minutes, not hours**
 
 Automated project generator with smart resume, progress tracking, and zero-config service integration. Choose your stack, enter your API keys, and get a fully configured app ready to deploy.
 
-> **Why Launchify?** Every new project starts the same way: hours configuring Vercel, setting up Clerk webhooks, connecting Convex, managing environment variables. Launchify automates the repetitive setup so you can skip straight to building what makes your product unique.
+> **Why TUIfy?** Every new project starts the same way: hours configuring Vercel, setting up Clerk webhooks, connecting Convex, managing environment variables. TUIfy automates the repetitive setup so you can skip straight to building what makes your product unique.
 
 ```bash
 ./create-project.sh
@@ -17,12 +17,12 @@ Automated project generator with smart resume, progress tracking, and zero-confi
 
 ```bash
 # 1. Clone
-git clone https://github.com/yourusername/launchify.git
-cd launchify
+git clone https://github.com/yourusername/tuify.git
+cd tuify
 
 # 2. Run (from parent directory recommended)
 cd ..
-./launchify/create-project.sh
+./tuify/create-project.sh
 
 # 3. Choose your stack (or pick a preset)
 # 4. Done! Your app is ready.
@@ -50,7 +50,7 @@ cd ..
 **Built-in Safety:**
 - Checkpoint/resume from any failure point
 - Progress tracking with ETA
-- Full logging to `~/.launchify/logs/`
+- Full logging to `~/.tuify/logs/`
 - ✅ Post-setup health checks
 
 **Developer Experience:**
@@ -156,10 +156,10 @@ Next steps:
 # → Automatically detects and resumes
 
 # Check logs
-ls ~/.launchify/logs/
+ls ~/.tuify/logs/
 
 # Start over
-rm -rf .launchify-state/
+rm -rf .tuify-state/
 ```
 
 ---
@@ -178,7 +178,7 @@ rm -rf .launchify-state/
 ### Where Are My Logs?
 
 ```bash
-ls -lt ~/.launchify/logs/
+ls -lt ~/.tuify/logs/
 # Logs: project-name_YYYY-MM-DD_HH-MM-SS.log
 ```
 

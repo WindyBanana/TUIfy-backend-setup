@@ -1,19 +1,19 @@
 #!/bin/bash
 
-# Test script for Launchify
+# Test script for TUIfy
 # Runs the generator with predefined inputs to verify it works
 
 set -e
 
 echo "╔═══════════════════════════════════════════════════════╗"
 echo "║                                                       ║"
-echo "║            LAUNCHIFY TEST SCRIPT                      ║"
+echo "║            TUIFY TEST SCRIPT                      ║"
 echo "║                                                       ║"
 echo "╚═══════════════════════════════════════════════════════╝"
 echo ""
 
 # Configuration
-TEST_PROJECT_NAME="launchify-test-$(date +%s)"
+TEST_PROJECT_NAME="tuify-test-$(date +%s)"
 PACKAGE_MANAGER="npm"
 
 echo "Test Configuration:"
@@ -41,7 +41,7 @@ echo ""
 
 # Create test input file
 # Testing minimal setup: npm + Next.js + shadcn/ui (no auth services)
-cat > /tmp/launchify-test-input.txt << EOF
+cat > /tmp/tuify-test-input.txt << EOF
 $TEST_PROJECT_NAME
 1
 1
@@ -60,7 +60,7 @@ echo "✓ Test inputs prepared"
 echo ""
 
 # Run the generator with test inputs
-./create-project.sh < /tmp/launchify-test-input.txt
+./create-project.sh < /tmp/tuify-test-input.txt
 
 # Check if project was created
 if [ -d "$TEST_PROJECT_NAME" ]; then
@@ -83,4 +83,4 @@ else
 fi
 
 # Cleanup test input file
-rm /tmp/launchify-test-input.txt
+rm /tmp/tuify-test-input.txt

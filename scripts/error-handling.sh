@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Error handling and resume functionality for Launchify
+# Error handling and resume functionality for TUIfy
 
 # State file location
-STATE_DIR=".launchify-state"
+STATE_DIR=".tuify-state"
 STATE_FILE="${STATE_DIR}/progress.state"
 CONFIG_FILE="${STATE_DIR}/config.state"
 
@@ -138,7 +138,7 @@ offer_recovery_options() {
     echo -e "${BLUE}If you choose Abort:${NC}"
     echo -e "   • Your progress is saved automatically"
     echo -e "   • Run: ${GREEN}./create-project.sh${NC} again to resume from this step"
-    echo -e "   • Check the log file at: ${CYAN}~/.launchify/logs/${NC} for details"
+    echo -e "   • Check the log file at: ${CYAN}~/.tuify/logs/${NC} for details"
     echo ""
     
     read -p "Choose option [1-4]: " recovery_choice
@@ -163,7 +163,7 @@ offer_recovery_options() {
             echo -e "${RED}Setup paused at step $step${NC}"
             echo ""
             echo -e "${CYAN}To resume:${NC}"
-            echo -e "  1. Fix the issue (check logs at ~/.launchify/logs/)"
+            echo -e "  1. Fix the issue (check logs at ~/.tuify/logs/)"
             echo -e "  2. Run: ${GREEN}./create-project.sh${NC}"
             echo -e "  3. The script will automatically resume from this step"
             echo ""

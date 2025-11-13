@@ -2,7 +2,7 @@
 
 ## Overview
 
-Launchify now includes a comprehensive error handling and resume system that:
+TUIfy now includes a comprehensive error handling and resume system that:
 - ✅ Tracks progress through checkpoints
 - ✅ Allows resuming from where you left off
 - ✅ Offers recovery options when steps fail
@@ -44,10 +44,10 @@ The error handling framework is **created but not yet integrated** into `create-
 
 ### State Tracking
 
-When setup starts, a hidden directory `.launchify-state/` is created:
+When setup starts, a hidden directory `.tuify-state/` is created:
 
 ```
-.launchify-state/
+.tuify-state/
 ├── progress.state    # Current step number
 └── config.state      # Project configuration
 ```
@@ -350,7 +350,7 @@ State is automatically cleaned up on successful completion:
 
 ## Security Considerations
 
-- State files stored in hidden directory (`.launchify-state/`)
+- State files stored in hidden directory (`.tuify-state/`)
 - State files contain no secrets (only configuration)
 - State directory added to `.gitignore` automatically
 - State cleaned up on successful completion
